@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NVIDIA Stock Visualization</title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="https://d3-annotation.susielu.com/d3-annotation.min.js"></script>
+    <script src="https://d3js.org/d3-scale.v3.min.js"></script>
+    <script src="https://d3js.org/d3-time.v2.min.js"></script>
+    <script src="https://d3js.org/d3-time-format.v3.min.js"></script>
+    <script src="https://d3js.org/d3-selection-multi.v1.js"></script>
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.0/d3-annotation.min.js"></script>
+    <script src="scene1.js"></script>
+    <script src="scene2.js"></script>
+    <script src="scene3.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
         }
+
         #visualization {
             width: 100%;
             height: 600px;
@@ -18,13 +27,16 @@
             justify-content: center;
             align-items: center;
         }
+
         .description {
             font-size: 18px;
             margin-bottom: 20px;
         }
+
         .nav-buttons {
             margin-top: 20px;
         }
+
         .nav-buttons button {
             margin: 0 10px;
             padding: 10px 20px;
@@ -33,6 +45,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="description">The dataset gives informative context and details to understand these trends</div>
     <div id="visualization"></div>
@@ -40,6 +53,6 @@
         <button id="prevBtn">Previous</button>
         <button id="nextBtn">Next</button>
     </div>
-    <script src="main.js"></script>
 </body>
+
 </html>
