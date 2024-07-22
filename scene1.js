@@ -1,3 +1,33 @@
+document.addEventListener('DOMContentLoaded', function() {
+    d3.csv('NVDA.csv').then(function(data) {
+        data.forEach(d => {
+            d.Date = d3.timeParse("%Y-%m-%d")(d.Date);
+            d.Close = +d.Close;
+            d.Volume = +d.Volume;
+        });
+        scenes[0](data);  // Initialize the first scene with data
+
+        // Add event listeners for scene buttons
+        document.getElementById('scene1Btn').addEventListener('click', function() {
+            scenes[0](data);
+        });
+
+        document.getElementById('scene2Btn').addEventListener('click', function() {
+            scenes[1](data);
+        });
+
+        document.getElementById('scene3Btn').addEventListener('click', function() {
+            scenes[2](data);
+        });
+    });
+});
+
+// Define parameters
+let currentScene = 0;
+
+// Define scenes
+const scenes = [scene1, scene2, scene3];
+
 function scene1(data) {
     d3.select("#visualization").html("");  // Clear previous scene
     const svg = d3.select("#visualization").append("svg")
