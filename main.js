@@ -1,10 +1,7 @@
-// main.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Load your dataset
-    d3.csv('path/to/your/data.csv').then(function(data) {
-        // Process data and initialize visualization
+    d3.csv('https://flunky.github.io/cars2017.csv').then(function(data) {
         console.log(data);
-        scenes[0]();  // Initialize the first scene
+        scenes[0](); 
     });
 });
 
@@ -19,8 +16,6 @@ const scenes = [
             .attr("width", 800)
             .attr("height", 600);
 
-        // Add D3 code to create your visualization for scene 1
-        // Example: A simple bar chart
         const data = [10, 20, 30, 40, 50];
         svg.selectAll("rect")
             .data(data)
@@ -38,8 +33,6 @@ const scenes = [
             .attr("width", 800)
             .attr("height", 600);
 
-        // Add D3 code to create your visualization for scene 2
-        // Example: A simple line chart
         const data = [10, 20, 30, 40, 50];
         const line = d3.line()
             .x((d, i) => i * 100)
@@ -52,10 +45,8 @@ const scenes = [
             .attr("stroke", "steelblue")
             .attr("stroke-width", 2);
     }
-    // Add more scenes as needed
 ];
 
-// Define triggers
 document.addEventListener('keydown', function(event) {
     if (event.key === "ArrowRight") {
         currentScene = (currentScene + 1) % scenes.length;
