@@ -106,3 +106,4 @@ svg.append("g")
 .attr("transform", `translate(${margin.left},${translateX})`)
 .call(xAxis);
 }
+init()
