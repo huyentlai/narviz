@@ -87,7 +87,7 @@ function showOverview() {
         .text("Closing Price (USD)");
 
     // Annotations
-    const annotations = [
+    /*const annotations = [
         {
             type: d3.annotationCallout,
             // note: { title: "Crypto collapse and datahouse crisis", label: `High: ${financialCrisisPeak.High}` },
@@ -97,17 +97,31 @@ function showOverview() {
             dy: -30,
             dx: 30
         },
-        /*{
+        {
             note: { label: "Annotation2" },
             x: x(new Date("2021-09-01")),
             y: y(window.data.find(d => d.Date.getTime() === new Date("2021-09-01").getTime()).Close),
             dy: -30,
             dx: 30
-        }*/
+        }
     ];
 
     const makeAnnotations = d3.annotation().annotations(annotations);
-    svg.append("g").call(makeAnnotations);
+    svg.append("g").call(makeAnnotations);*/
+
+    const annotations = [
+            {
+                note: { label: "Significant rise in stock price", title: "Major Event" },
+                x: x(new Date("2019-12-01")),
+                y: y(240),
+                dy: -50,
+                dx: -50
+            }
+        ];
+
+        const makeAnnotations = d3.annotation().annotations(annotations);
+        svg.append("g").call(makeAnnotations);
+
 }
 
 function showScene1() {
