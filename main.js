@@ -18,7 +18,16 @@ const margin = { top: 50, right: 50, bottom: 120, left: 120 },
 // Tooltip div
 const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
+// Function to set active button
+function setActiveButton(buttonId) {
+    document.querySelectorAll('.navbar button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.getElementById(buttonId).classList.add('active');
+}
+
 function showOverview() {
+    setActiveButton('overview-btn');
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("The dataset gives informative context and details to understand these trends");
 
@@ -132,6 +141,7 @@ function showOverview() {
 }
 
 function showScene1() {
+    setActiveButton('scene1-btn');
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("Scene 1 covers first period");
 
@@ -146,6 +156,7 @@ function showScene1() {
 }
 
 function showScene2() {
+    setActiveButton('scene2-btn');
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("Scene 2 covers first period");
 
