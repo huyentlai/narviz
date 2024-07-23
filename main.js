@@ -201,7 +201,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
                 d3.select(this).transition().duration(100).style("opacity", 0);
                 tooltip.transition().duration(500).style("opacity", 0);
             });
-    
+    }
     // Add tooltips for highest and lowest points
     const highest = d3.max(data, yValueAccessor);
     const lowest = d3.min(data, yValueAccessor);
