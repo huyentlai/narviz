@@ -23,37 +23,86 @@ function showOverview() {
     d3.select("#visualization").append("div").attr("class", "description").text("The dataset gives informative context and details to understand these trends");
 
     // Chart 1: Closing Prices
-    createChart(window.data, "NVIDIA Stock Closing Prices (Jan 2017 - Jun 2022)", d => d.Close, "Closing Price (USD)", "Close", false);
+    // createChart(window.data, "NVIDIA Stock Closing Prices (Jan 2017 - Jun 2022)", d => d.Close, "Closing Price (USD)", "Close", false);
 
     // Chart 2: Trading Volume
-    createChart(window.data, "NVIDIA Stock Trading Volume (Jan 2017 - Jun 2022)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false);
+    // createChart(window.data, "NVIDIA Stock Trading Volume (Jan 2017 - Jun 2022)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false);
 
-    const annotations1 = [
-        {
-            note: { label: "Drop due to market correction", title: "Market Event" },
-            x: x(new Date("2020-06-01")),
-            y: y(110),
-            dy: -50,
-            dx: 50
-        }
-    ];
+    const svg = d3.select("#visualization").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    const makeAnnotations1 = d3.annotation().annotations(annotations1);
-    svg.append("g").call(makeAnnotations1);
+    const x = d3.scaleTime().domain(d3.extent(window.data, d => d.Date)).range([0, width]);
+    const y = d3.scaleLinear().domain([0, d3.max(window.data, d => d.Close)]).range([height, 0]);
 
-    const annotations2 = [
-        {
-            note: { label: "Drop due to market correction", title: "Market Event" },
-            x: x(new Date("2020-03-01")),
-            y: y(210),
-            dy: -10,
-            dx: 10
-        }
-    ];
+    svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
+    svg.append("g").call(d3.axisLeft(y));
 
-    const makeAnnotations2 = d3.annotation().annotations(annotations2);
-    svg.append("g").call(makeAnnotations2);
+    const line1 = d3.line()
+        .x(d => x(d.Date))
+        .y(d => y(d.Close));
 
+    const line2 = d3.line()
+        .x(d => x(d.Date))
+        .y(d => y(d.Close));
+
+    // Section 1: Jan 2017 - Mar 2021
+    svg.append("path")
+        .datum(window.data.filter(d => d.Date < new Date("2021-03-01")))
+        .attr("fill", "none")
+        .attr("stroke", "red")
+        .attr("stroke-width", 2)
+        .attr("d", line1);
+
+    // Section 2: Mar 2021 - Jun 2022
+    svg.append("path")
+        .datum(window.data.filter(d => d.Date >= new Date("2021-03-01") && d.Date <= new Date("2022-06-30")))
+        .attr("fill", "none")
+        .attr("stroke", "green")
+        .attr("stroke-width", 2)
+        .attr("d", line2);
+
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", -20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "24px")
+        .text("NVIDIA Stock Overview");
+
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "18px")
+        .text("Date");
+
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -margin.left + 40)
+        .attr("x", -height / 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "18px")
+        .text("Closing Price (USD)");
+
+    // Annotation 1
+    svg.append("text")
+        .attr("x", x(new Date("2020-06-01")))
+        .attr("y", y(window.data.find(d => d.Date.getTime() === new Date("2020-06-01").getTime()).Close) - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("fill", "red")
+        .text("Annotation1");
+
+    // Annotation 2
+    svg.append("text")
+        .attr("x", x(new Date("2021-09-01")))
+        .attr("y", y(window.data.find(d => d.Date.getTime() === new Date("2021-09-01").getTime()).Close) - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("fill", "green")
+        .text("Annotation2");
 }
 
 function showScene1() {
