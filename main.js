@@ -119,8 +119,8 @@ function showOverview() {
             }
         ];
 
-        const makeAnnotations = d3.annotation().annotations(annotations);
-        svg.append("g").call(makeAnnotations);
+    const makeAnnotations = d3.annotation().annotations(annotations);
+    svg.append("g").call(makeAnnotations);
 
 }
 
@@ -183,6 +183,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
 
     svg.append("text")
         .attr("x", width / 2)
+        .attr("transform", "rotate(-45)")
         .attr("y", height + margin.bottom - 20)
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
