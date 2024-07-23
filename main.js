@@ -132,7 +132,7 @@ function showScene1() {
 
     // Chart 1: Closing Prices
     createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2020)", d => d.Close, "Closing Price (USD)", "Close", true, "red");
-const annotations = [
+    const annotations = [
             {
                 note: { label: "Plateau in stock price", title: "Cryto crash and datahouse crisis" },
                 x: x(new Date("2019-01-01")),
@@ -159,7 +159,7 @@ function showScene2() {
     // Chart 1: Closing Prices
     createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2020 - End of Period)", d => d.Close, "Closing Price (USD)", "Close", true, "green");
     
-const annotations = [
+    const annotations = [
             {
                 note: { label: " Soar in stock price", title: "AI boom" },
                 x: x(new Date("2021-10-01")),
