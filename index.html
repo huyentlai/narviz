@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>NVIDIA Stock Visualization</title>
@@ -11,7 +10,7 @@
     <script src="https://d3js.org/d3-selection-multi.v1.js"></script>
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.0/d3-annotation.min.js"></script>
-    <script src="scene1.js"></script>
+    <script src="main.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
 
         .description {
@@ -41,16 +41,28 @@
             font-size: 16px;
             cursor: pointer;
         }
+
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: 60px;
+            height: 28px;
+            padding: 2px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
     </style>
 </head>
 
 <body>
-    <div class="description">The dataset gives informative context and details to understand these trends</div>
-    <div id="visualization"></div>
-    <div class="nav-buttons">
-        <button id="scene1Btn">Scene 1: Stock Prices</button>
-        <button id="scene2Btn">Scene 2: Market Correction</button>
-        <button id="scene3Btn">Scene 3: Trading Volume</button>
+    <div class="description">NVIDIA Stock Data Visualization</div>
+    <div id="visualization">
+        <button onclick="showOverview()">Overview</button>
+        <button onclick="showScene1()">Scene 1: Jan 2017 - Mar 2021</button>
+        <button onclick="showScene2()">Scene 2: Mar 2021 - End of Period</button>
     </div>
 </body>
 
