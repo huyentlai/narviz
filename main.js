@@ -245,7 +245,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .attr("cx", d => x(d.Date))
             .attr("cy", d => y(yValueAccessor(d)))
             .attr("r", 4)
-            .attr("fill", "red")
+            .attr("fill", "yellow")
             .style("opacity", 0)
             .on("mouseover", function(event, d) {
                 d3.select(this).transition().duration(100).style("opacity", 1);
@@ -257,7 +257,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .on("mouseout", function(event, d) {
                 d3.select(this).transition().duration(100).style("opacity", 0);
                 tooltip.transition().duration(500).style("opacity", 0);
-            });
+            }); 
     }
 
     // Add fixed tooltips for highest and lowest points
