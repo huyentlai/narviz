@@ -241,17 +241,18 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .attr("fill", "orange")
             .style("opacity", 0)
             .on("mouseover", function(event, d) {
-                d3.select(this).transition().duration(100).style("opacity", 1);
+                d3.select(this).transition().duration('50').attr("opacity", '.5');
                 tooltip.transition().duration(200).style("opacity", .9);
-                tooltip.html(`Date: ${d3.timeFormat("%B %d, %Y")(d.Date)}<br>Close: ${d.Close}`)
+                tooltip.html(`Close: ${d.Close}`)
                     .style("left", (event.pageX + 5) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function(event, d) {
-                d3.select(this).transition().duration(100).style("opacity", 0);
-                tooltip.transition().duration(500).style("opacity", 0);
+                d3.select(this).transition().duration('50').attr("opacity", '1');
+                tooltip.transition().duration(200).style("opacity", 0);
             });
     }
+
     // Add fixed tooltips for highest and lowest points
     const highest = d3.max(data, yValueAccessor);
     const lowest = d3.min(data, yValueAccessor);
