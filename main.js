@@ -105,9 +105,9 @@ function showOverview() {
     const annotations = [
             {
                 note: { label: "Plateau in stock price", title: "Cryto crash and datahouse crisis" },
-                x: x(new Date("2020-06-01")),
-                y: y(240),
-                dy: -40,
+                x: x(new Date("2019-06-01")),
+                y: y(100),
+                dy: 40,
                 dx: -25
             },
             {
