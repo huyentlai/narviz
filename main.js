@@ -133,10 +133,10 @@ function showScene1() {
     const filteredData = window.data.filter(d => d.Date < new Date(cutOffDate));
 
     // Chart 1: Closing Prices
-    createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2020)", d => d.Close, "Closing Price (USD)", "Close", true, "red", true);
+    createChart(filteredData, "NVIDIA Stock Closing Prices", d => d.Close, "Closing Price (USD)", "Close", true, "red", true);
 
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2020)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red", false);
+    createChart(filteredData, "NVIDIA Stock Trading Volume", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red", false);
 
 }
 
@@ -147,10 +147,10 @@ function showScene2() {
     const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate));
 
     // Chart 1: Closing Prices
-    createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2020 - End of Period)", d => d.Close, "Closing Price (USD)", "Close", true, "green", false);
+    createChart(filteredData, "NVIDIA Stock Closing Prices", d => d.Close, "Closing Price (USD)", "Close", true, "green", false);
     
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume (Mar 2020 - End of Period)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "green", false);
+    createChart(filteredData, "NVIDIA Stock Trading Volume", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "green", false);
 }
 
 function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEffect, chartColor, isScene1) {
@@ -173,11 +173,30 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
                 note: {
                     title: `The market fell 40% over one year and two months.`,
                     label: `Plateau in closing price`,
-                    align: "middle",  // to align the text in the middle
+                    align: "right",  // to align the text in the middle
                     wrap: width / 3  // to control the width of the text box
                 },
-                x: x(new Date("2019-06-01")),// x position is in the middle of the peak and bottom dates
+                x: x(new Date("2018-12-01")),// x position is in the middle of the peak and bottom dates
                 y: y(60),  // y position is in the middle of the peak and bottom prices
+                dx: 0,  // offset in x direction
+                dy: 0   // offset in y direction
+            }
+        ]; 
+        const makeAnnotations = d3.annotation().annotations(annotations);
+        svg.append("g").call(makeAnnotations);
+    }
+    else {
+        const annotations = [
+            {
+                type: d3.annotationXYThreshold,
+                note: {
+                    title: `Stock closing price soared 40% over one year and two months.`,
+                    label: `Rise in closing price`,
+                    align: "right",  // to align the text in the middle
+                    wrap: width / 2  // to control the width of the text box
+                },
+                x: x(new Date("2021-01-01")),// x position is in the middle of the peak and bottom dates
+                y: y(250),  // y position is in the middle of the peak and bottom prices
                 dx: 0,  // offset in x direction
                 dy: 0   // offset in y direction
             }
@@ -249,7 +268,7 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("cx", x(point.Date))
         .attr("cy", y(yValueAccessor(point)))
         .attr("r", 5)
-        .attr("fill", "orange")
+        .attr("fill", "gray")
         .on("mouseover", function(event, d) {
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(`${label}: ${yValueAccessor(point)} ${yField === "Volume" ? "M" : ""}`)
@@ -265,6 +284,6 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("y", y(yValueAccessor(point)) + 5)  // Align vertically with the point
         .attr("text-anchor", "start")  // Align text to the start
         .style("font-size", "12px")
-        .style("fill", "orange")
+        .style("fill", "gray")
         .text(`${label}: ${yValueAccessor(point).toFixed(2)}`);
 }
