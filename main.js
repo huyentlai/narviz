@@ -136,7 +136,7 @@ function showScene1() {
     createChart(filteredData, "NVIDIA Stock Closing Prices", d => d.Close, "Closing Price (USD)", "Close", true, "red", true);
 
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red", false);
+    createChart(filteredData, "NVIDIA Stock Trading Volume", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red", false, false);
 
 }
 
@@ -147,13 +147,13 @@ function showScene2() {
     const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate));
 
     // Chart 1: Closing Prices
-    createChart(filteredData, "NVIDIA Stock Closing Prices", d => d.Close, "Closing Price (USD)", "Close", true, "green", false);
+    createChart(filteredData, "NVIDIA Stock Closing Prices", d => d.Close, "Closing Price (USD)", "Close", true, "green", false, true);
     
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "green", false);
+    createChart(filteredData, "NVIDIA Stock Trading Volume", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "green", false, false);
 }
 
-function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEffect, chartColor, isScene1) {
+function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEffect, chartColor, isScene1, isScene2) {
     const svg = d3.select("#visualization").append("svg")
         .attr("width", width + margin.left + margin.right + 40)
         .attr("height", height + margin.top + margin.bottom)
@@ -185,7 +185,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
         const makeAnnotations = d3.annotation().annotations(annotations);
         svg.append("g").call(makeAnnotations);
     }
-    else {
+    if (isScene2) {
         const annotations = [
             {
                 type: d3.annotationXYThreshold,
@@ -202,7 +202,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             },
             {
                 note: { label: "Soar in stock price", title: "AI boom" },
-                x: x(new Date("2021-10-01")),
+                x: x(new Date("2021-11-01")),
                 y: y(260),
                 dy: -35,
                 dx: -45
@@ -245,18 +245,18 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .attr("cx", d => x(d.Date))
             .attr("cy", d => y(yValueAccessor(d)))
             .attr("r", 4)
-            .attr("fill", "orange")
+            .attr("fill", "red")
             .style("opacity", 0)
             .on("mouseover", function(event, d) {
-                d3.select(this).transition().duration(50).style("opacity", .5);
+                d3.select(this).transition().duration(100).style("opacity", 1);
                 tooltip.transition().duration(200).style("opacity", .9);
-                tooltip.html(`Close:`)
+                tooltip.html(`Close: ${yValueAccessor(d)}`)  // Show the closing price
                     .style("left", (event.pageX + 5) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function(event, d) {
-                d3.select(this).transition().duration(50).style("opacity", 1);
-                tooltip.transition().duration(200).style("opacity", 0);
+                d3.select(this).transition().duration(100).style("opacity", 0);
+                tooltip.transition().duration(500).style("opacity", 0);
             });
     }
 
