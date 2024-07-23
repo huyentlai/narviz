@@ -17,29 +17,25 @@
             text-align: center;
         }
 
-        #visualization {
-            width: 100%;
-            height: 600px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .description {
-            font-size: 18px;
+        .navbar {
+            margin-top: 20px;
             margin-bottom: 20px;
         }
 
-        .nav-buttons {
-            margin-top: 20px;
-        }
-
-        .nav-buttons button {
+        .navbar button {
             margin: 0 10px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+        }
+
+        #visualization {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
         .tooltip {
@@ -58,12 +54,12 @@
 </head>
 
 <body>
-    <div class="description">NVIDIA Stock Data Visualization</div>
-    <div id="visualization">
-        <button onclick="showOverview()">Overview</button>
+    <div class="navbar">
+        <button onclick="showOverview()">Home - Overview</button>
         <button onclick="showScene1()">Scene 1: Jan 2017 - Mar 2021</button>
-        <button onclick="showScene2()">Scene 2: Mar 2021 - End of Period</button>
+        <button onclick="showScene2()">Scene 2: Mar 2021 - Jun 2022</button>
     </div>
+    <div id="visualization"></div>
 </body>
 
 </html>
