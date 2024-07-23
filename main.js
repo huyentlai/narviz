@@ -132,18 +132,6 @@ function showScene1() {
 
     // Chart 1: Closing Prices
     createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2020)", d => d.Close, "Closing Price (USD)", "Close", true, "red");
-    const annotations = [
-            {
-                note: { label: "Plateau in stock price", title: "Cryto crash and datahouse crisis" },
-                x: x(new Date("2019-01-01")),
-                y: y(50),
-                dy: -40,
-                dx: 25
-            }
-        ];
-
-    const makeAnnotations = d3.annotation().annotations(annotations);
-    svg.append("g").call(makeAnnotations);
 
     // Chart 2: Trading Volume
     createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2020)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red");
@@ -159,26 +147,13 @@ function showScene2() {
     // Chart 1: Closing Prices
     createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2020 - End of Period)", d => d.Close, "Closing Price (USD)", "Close", true, "green");
     
-    const annotations = [
-            {
-                note: { label: " Soar in stock price", title: "AI boom" },
-                x: x(new Date("2021-10-01")),
-                y: y(260),
-                dy: -35,
-                dx: -45
-            }
-        ];
-
-    const makeAnnotations = d3.annotation().annotations(annotations);
-    svg.append("g").call(makeAnnotations);
-
     // Chart 2: Trading Volume
     createChart(filteredData, "NVIDIA Stock Trading Volume (Mar 2020 - End of Period)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "green");
 }
 
 function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEffect, chartColor) {
     const svg = d3.select("#visualization").append("svg")
-        .attr("width", width + margin.left + margin.right)
+        .attr("width", width + margin.left + margin.right + 30)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -205,13 +180,6 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
         .attr("text-anchor", "middle")
         .style("font-size", "24px")
         .text(title);
-
-    /*svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", height + margin.bottom - 20)
-        .attr("text-anchor", "middle")
-        .style("font-size", "18px")
-        .text("Date");*/
 
     svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -243,7 +211,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
                 tooltip.transition().duration(500).style("opacity", 0);
             });
     }
-    // Add tooltips for highest and lowest points
+    // Add fixed tooltips for highest and lowest points
     const highest = d3.max(data, yValueAccessor);
     const lowest = d3.min(data, yValueAccessor);
     const highestPoint = data.find(d => yValueAccessor(d) === highest);
