@@ -1,207 +1,128 @@
 document.addEventListener('DOMContentLoaded', function() {
-    d3.csv('NVDA.csv').then(function(data) {
+    d3.csv('path/to/NVDA.csv').then(function(data) {
         data.forEach(d => {
             d.Date = d3.timeParse("%Y-%m-%d")(d.Date);
             d.Close = +d.Close;
+            d.Volume = +d.Volume;
         });
-        scenes[0](data);  // Initialize the first scene with data
-
-        // Add event listeners for navigation buttons
-        document.getElementById('prevBtn').addEventListener('click', function() {
-            currentScene = (currentScene - 1 + scenes.length) % scenes.length;
-            scenes[currentScene](data);
-        });
-
-        document.getElementById('nextBtn').addEventListener('click', function() {
-            currentScene = (currentScene + 1) % scenes.length;
-            scenes[currentScene](data);
-        });
+        window.data = data;  // Make data available globally
+        showOverview();  // Show overview on load
     });
 });
 
-// Define parameters
-let currentScene = 0;
+// Define margins and dimensions
+const margin = { top: 50, right: 50, bottom: 120, left: 120 },
+    width = 800 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
-// Define scenes
-const scenes = [
-    function scene1(data) {
-        d3.select("#visualization").html("");  // Clear previous scene
-        const svg = d3.select("#visualization").append("svg")
-            .attr("width", 800)
-            .attr("height", 600)
-            .append("g")
-            .attr("transform", "translate(50,50)");
+// Tooltip div
+const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
-        const x = d3.scaleTime().domain(d3.extent(data, d => d.Date)).range([0, 700]);
-        const y = d3.scaleLinear().domain([d3.min(data, d => d.Close), d3.max(data, d => d.Close)]).range([500, 0]);
+function showOverview() {
+    d3.select("#visualization").html("");  // Clear previous content
+    d3.select("#visualization").append("div").attr("class", "description").text("The dataset gives informative context and details to understand these trends");
+}
 
-        const line = d3.line()
+function showScene1() {
+    d3.select("#visualization").html("");  // Clear previous content
+
+    const filteredData = window.data.filter(d => d.Date < new Date("2021-03-01"));
+
+    // Chart 1: Closing Prices
+    createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2021)", d => d.Close, "Closing Price (USD)", "Close");
+
+    // Chart 2: Trading Volume
+    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2021)", d => d.Volume / 1e6, "Volume (Millions)", "Volume");
+}
+
+function showScene2() {
+    d3.select("#visualization").html("");  // Clear previous content
+
+    const filteredData = window.data.filter(d => d.Date >= new Date("2021-03-01"));
+
+    // Chart 1: Closing Prices
+    createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2021 - End of Period)", d => d.Close, "Closing Price (USD)", "Close");
+
+    // Chart 2: Trading Volume
+    createChart(filteredData, "NVIDIA Stock Trading Volume (Mar 2021 - End of Period)", d => d.Volume / 1e6, "Volume (Millions)", "Volume");
+}
+
+function createChart(data, title, yValueAccessor, yAxisLabel, yField) {
+    const svg = d3.select("#visualization").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    const x = d3.scaleTime().domain(d3.extent(data, d => d.Date)).range([0, width]);
+    const y = d3.scaleLinear().domain([0, d3.max(data, yValueAccessor)]).range([height, 0]);
+
+    svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
+    svg.append("g").call(d3.axisLeft(y));
+
+    svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 2)
+        .attr("d", d3.line()
             .x(d => x(d.Date))
-            .y(d => y(d.Close));
+            .y(d => y(yValueAccessor(d)))
+        );
 
-        svg.append("g").attr("transform", "translate(0,500)").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
-        svg.append("g").call(d3.axisLeft(y));
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", -20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "24px")
+        .text(title);
 
-        svg.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 2)
-            .attr("d", line);
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "18px")
+        .text("Date");
 
-        svg.append("text")
-            .attr("x", 350)
-            .attr("y", -20)
-            .attr("text-anchor", "middle")
-            .style("font-size", "24px")
-            .text("NVIDIA Stock Closing Prices");
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -margin.left + 40)
+        .attr("x", -height / 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "18px")
+        .text(yAxisLabel);
 
-        svg.append("text")
-            .attr("x", 350)
-            .attr("y", 540)
-            .attr("text-anchor", "middle")
-            .style("font-size", "18px")
-            .text("Date");
+    // Add tooltips for highest and lowest points
+    const highest = d3.max(data, yValueAccessor);
+    const lowest = d3.min(data, yValueAccessor);
+    const highestPoint = data.find(d => yValueAccessor(d) === highest);
+    const lowestPoint = data.find(d => yValueAccessor(d) === lowest);
 
-        svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", -40)
-            .attr("x", -250)
-            .attr("text-anchor", "middle")
-            .style("font-size", "18px")
-            .text("Closing Price (USD)");
+    addTooltip(svg, x, y, highestPoint, yValueAccessor, "Highest", yField);
+    addTooltip(svg, x, y, lowestPoint, yValueAccessor, "Lowest", yField);
+}
 
-        const annotations = [
-            {
-                note: { label: "Significant rise in stock price", title: "Major Event" },
-                x: x(new Date("2019-12-01")),
-                y: y(240),
-                dy: -50,
-                dx: -50
-            }
-        ];
+function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
+    svg.append("circle")
+        .attr("cx", x(point.Date))
+        .attr("cy", y(yValueAccessor(point)))
+        .attr("r", 5)
+        .attr("fill", "red")
+        .on("mouseover", function(event, d) {
+            tooltip.transition().duration(200).style("opacity", .9);
+            tooltip.html(`${label}: ${yValueAccessor(point)} ${yField === "Volume" ? "M" : ""}`)
+                .style("left", (event.pageX + 5) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            tooltip.transition().duration(500).style("opacity", 0);
+        });
 
-        const makeAnnotations = d3.annotation().annotations(annotations);
-        svg.append("g").call(makeAnnotations);
-    },
-    function scene2(data) {
-        d3.select("#visualization").html("");  // Clear previous scene
-        const svg = d3.select("#visualization").append("svg")
-            .attr("width", 800)
-            .attr("height", 600)
-            .append("g")
-            .attr("transform", "translate(50,50)");
-
-        const x = d3.scaleTime().domain(d3.extent(data, d => d.Date)).range([0, 700]);
-        const y = d3.scaleLinear().domain([d3.min(data, d => d.Close), d3.max(data, d => d.Close)]).range([500, 0]);
-
-        const line = d3.line()
-            .x(d => x(d.Date))
-            .y(d => y(d.Close));
-
-        svg.append("g").attr("transform", "translate(0,500)").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
-        svg.append("g").call(d3.axisLeft(y));
-
-        svg.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 2)
-            .attr("d", line);
-
-        svg.append("text")
-            .attr("x", 350)
-            .attr("y", -20)
-            .attr("text-anchor", "middle")
-            .style("font-size", "24px")
-            .text("NVIDIA Stock Closing Prices");
-
-        svg.append("text")
-            .attr("x", 350)
-            .attr("y", 540)
-            .attr("text-anchor", "middle")
-            .style("font-size", "18px")
-            .text("Date");
-
-        svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", -40)
-            .attr("x", -250)
-            .attr("text-anchor", "middle")
-            .style("font-size", "18px")
-            .text("Closing Price (USD)");
-
-        const annotations = [
-            {
-                note: { label: "Drop due to market correction", title: "Market Event" },
-                x: x(new Date("2020-03-01")),
-                y: y(210),
-                dy: -50,
-                dx: 50
-            }
-        ];
-
-        const makeAnnotations = d3.annotation().annotations(annotations);
-        svg.append("g").call(makeAnnotations);
-    },
-    function scene3(data) {
-        d3.select("#visualization").html("");  // Clear previous scene
-        const svg = d3.select("#visualization").append("svg")
-            .attr("width", 800)
-            .attr("height", 600)
-            .append("g")
-            .attr("transform", "translate(50,50)");
-
-        const x = d3.scaleTime().domain(d3.extent(data, d => d.Date)).range([0, 700]);
-        const y = d3.scaleLinear().domain([d3.min(data, d => d.Close), d3.max(data, d => d.Close)]).range([500, 0]);
-
-        const line = d3.line()
-            .x(d => x(d.Date))
-            .y(d => y(d.Close));
-
-        svg.append("g").attr("transform", "translate(0,500)").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
-        svg.append("g").call(d3.axisLeft(y));
-
-        svg.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 2)
-            .attr("d", line);
-
-        svg.append("text")
-            .attr("x", 350)
-            .attr("y", -20)
-            .attr("text-anchor", "middle")
-            .style("font-size", "24px")
-            .text("NVIDIA Stock Closing Prices");
-
-        svg.append("text")
-            .attr("x", 350)
-            .attr("y", 540)
-            .attr("text-anchor", "middle")
-            .style("font-size", "18px")
-            .text("Date");
-
-        svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", -40)
-            .attr("x", -250)
-            .attr("text-anchor", "middle")
-            .style("font-size", "18px")
-            .text("Closing Price (USD)");
-
-        const annotations = [
-            {
-                note: { label: "Significant recovery post-pandemic", title: "Recovery" },
-                x: x(new Date("2020-09-01")),
-                y: y(550),
-                dy: -50,
-                dx: 50
-            }
-        ];
-
-        const makeAnnotations = d3.annotation().annotations(annotations);
-        svg.append("g").call(makeAnnotations);
-    }
-];
+    svg.append("text")
+        .attr("x", x(point.Date))
+        .attr("y", y(yValueAccessor(point)) - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("fill", "red")
+        .text(label);
+}
