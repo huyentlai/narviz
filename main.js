@@ -48,17 +48,17 @@ function showOverview() {
         .x(d => x(d.Date))
         .y(d => y(d.Close));
 
-    // Section 1: Jan 2017 - Mar 2021
+    // Section 1: Jan 2017 - Mar 2020
     svg.append("path")
-        .datum(window.data.filter(d => d.Date < new Date("2021-03-01")))
+        .datum(window.data.filter(d => d.Date < new Date("2020-03-01")))
         .attr("fill", "none")
         .attr("stroke", "red")
         .attr("stroke-width", 2)
         .attr("d", line1);
 
-    // Section 2: Mar 2021 - Jun 2022
+    // Section 2: Mar 2020 - Jun 2022
     svg.append("path")
-        .datum(window.data.filter(d => d.Date >= new Date("2021-03-01") && d.Date <= new Date("2022-06-30")))
+        .datum(window.data.filter(d => d.Date >= new Date("2020-03-01") && d.Date <= new Date("2022-06-30")))
         .attr("fill", "none")
         .attr("stroke", "green")
         .attr("stroke-width", 2)
@@ -86,36 +86,39 @@ function showOverview() {
         .style("font-size", "18px")
         .text("Closing Price (USD)");
 
-    // Annotation 1
-    svg.append("text")
-        .attr("x", x(new Date("2020-06-01")))
-        .attr("y", y(window.data.find(d => d.Date.getTime() === new Date("2020-06-01").getTime()).Close) - 10)
-        .attr("text-anchor", "middle")
-        .style("font-size", "12px")
-        .style("fill", "red")
-        .text("Annotation1");
+    // Annotations
+    const annotations = [
+        {
+            note: { label: "Annotation1" },
+            x: x(new Date("2020-06-01")),
+            y: y(window.data.find(d => d.Date.getTime() === new Date("2020-06-01").getTime()).Close),
+            dy: -30,
+            dx: 30
+        },
+        {
+            note: { label: "Annotation2" },
+            x: x(new Date("2021-09-01")),
+            y: y(window.data.find(d => d.Date.getTime() === new Date("2021-09-01").getTime()).Close),
+            dy: -30,
+            dx: 30
+        }
+    ];
 
-    // Annotation 2
-    svg.append("text")
-        .attr("x", x(new Date("2021-09-01")))
-        .attr("y", y(window.data.find(d => d.Date.getTime() === new Date("2021-09-01").getTime()).Close) - 10)
-        .attr("text-anchor", "middle")
-        .style("font-size", "12px")
-        .style("fill", "green")
-        .text("Annotation2");
+    const makeAnnotations = d3.annotation().annotations(annotations);
+    svg.append("g").call(makeAnnotations);
 }
 
 function showScene1() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("Scene 1 covers first period");
 
-    const filteredData = window.data.filter(d => d.Date < new Date("2021-03-01"));
+    const filteredData = window.data.filter(d => d.Date < new Date("2020-03-01"));
 
     // Chart 1: Closing Prices
-    createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2021)", d => d.Close, "Closing Price (USD)", "Close", true);
+    createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2020)", d => d.Close, "Closing Price (USD)", "Close", true, "red");
 
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2021)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false);
+    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2020)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red");
 
 }
 
@@ -123,16 +126,16 @@ function showScene2() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("Scene 2 covers first period");
 
-    const filteredData = window.data.filter(d => d.Date >= new Date("2021-03-01"));
+    const filteredData = window.data.filter(d => d.Date >= new Date("2020-03-01"));
 
     // Chart 1: Closing Prices
-    createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2021 - End of Period)", d => d.Close, "Closing Price (USD)", "Close", true);
+    createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2020 - End of Period)", d => d.Close, "Closing Price (USD)", "Close", true, "green");
 
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume (Mar 2021 - End of Period)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false);
+    createChart(filteredData, "NVIDIA Stock Trading Volume (Mar 2020 - End of Period)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "green");
 }
 
-function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEffect) {
+function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEffect, chartColor) {
     const svg = d3.select("#visualization").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -148,7 +151,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
     svg.append("path")
         .datum(data)
         .attr("fill", "none")
-        .attr("stroke", "steelblue")
+        .attr("stroke", chartColor)
         .attr("stroke-width", 2)
         .attr("d", d3.line()
             .x(d => x(d.Date))
@@ -198,8 +201,6 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
                 d3.select(this).transition().duration(100).style("opacity", 0);
                 tooltip.transition().duration(500).style("opacity", 0);
             });
-    }
-
     
     // Add tooltips for highest and lowest points
     const highest = d3.max(data, yValueAccessor);
@@ -208,6 +209,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
     const lowestPoint = data.find(d => yValueAccessor(d) === lowest);
 
     addTooltip(svg, x, y, highestPoint, yValueAccessor, "Highest", yField);
+        
     addTooltip(svg, x, y, lowestPoint, yValueAccessor, "Lowest", yField);
 }
 
@@ -216,7 +218,7 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("cx", x(point.Date))
         .attr("cy", y(yValueAccessor(point)))
         .attr("r", 5)
-        .attr("fill", "red")
+        .attr("fill", "orange")
         .on("mouseover", function(event, d) {
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(`${label}: ${yValueAccessor(point)} ${yField === "Volume" ? "M" : ""}`)
@@ -228,10 +230,10 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         });
 
     svg.append("text")
-        .attr("x", x(point.Date))
-        .attr("y", y(yValueAccessor(point)) - 10)
-        .attr("text-anchor", "middle")
+        .attr("x", x(point.Date) + 10)  // Position to the right
+        .attr("y", y(yValueAccessor(point)) + 5)  // Align vertically with the point
+        .attr("text-anchor", "start")  // Align text to the start
         .style("font-size", "12px")
-        .style("fill", "red")
-        .text(label);
+        .style("fill", "orange")
+        .text(`${label} price: ${yValueAccessor(point).toFixed(2)}`);
 }
