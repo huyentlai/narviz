@@ -113,17 +113,17 @@ function showOverview() {
             {
                 note: { label: "Plateau in stock price", title: "Cryto crash and datahouse crisis" },
                 x: x(new Date("2020-06-01")),
-                y: y(window.data.find(d => d.Date.getTime() === new Date("2020-06-01").getTime()).Close),
-                dy: -90,
-                dx: -10
+                y: y(240),
+                dy: -70,
+                dx: -30
             },
-            {
+            /*{
                 note: { label: " Soar in stock price", title: "AI boom" },
                 x: x(new Date("2021-06-01")),
-                y: y(window.data.find(d => d.Date.getTime() === new Date("2021-06-01").getTime()).Close),
+                y: y(240),
                 dy: -50,
-                dx: -90
-            }
+                dx: -70
+            }*/
         ];
 
     const makeAnnotations = d3.annotation().annotations(annotations);
@@ -168,7 +168,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
     const x = d3.scaleTime().domain(d3.extent(data, d => d.Date)).range([0, width]);
     const y = d3.scaleLinear().domain([0, d3.max(data, yValueAccessor)]).range([height, 0]);
 
-    svg.append("g").attr("transform", "rotate(-45)", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
+    svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
     svg.append("g").call(d3.axisLeft(y));
 
     svg.append("path")
