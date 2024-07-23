@@ -72,13 +72,6 @@ function showOverview() {
         .text("NVIDIA Stock Overview");
 
     svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", height + margin.bottom - 20)
-        .attr("text-anchor", "middle")
-        .style("font-size", "18px")
-        .text("Date");
-
-    svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", -margin.left + 40)
         .attr("x", -height / 2)
@@ -114,16 +107,16 @@ function showOverview() {
                 note: { label: "Plateau in stock price", title: "Cryto crash and datahouse crisis" },
                 x: x(new Date("2020-06-01")),
                 y: y(240),
-                dy: -70,
-                dx: -30
-            }
-            /*{
+                dy: -40,
+                dx: -25
+            },
+            {
                 note: { label: " Soar in stock price", title: "AI boom" },
                 x: x(new Date("2021-06-01")),
                 y: y(240),
-                dy: -50,
-                dx: -70
-            }*/
+                dy: -35,
+                dx: -45
+            }
         ];
 
     const makeAnnotations = d3.annotation().annotations(annotations);
