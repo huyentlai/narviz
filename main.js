@@ -134,7 +134,7 @@ function showScene1() {
     createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2020)", d => d.Close, "Closing Price (USD)", "Close", true, "red", true);
 
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2020)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red", true);
+    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2020)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red", false);
 
 }
 
@@ -175,7 +175,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
                     wrap: width / 2  // to control the width of the text box
                 },
                 x: x(new Date("2019-01-01")),// x position is in the middle of the peak and bottom dates
-                y: y(100),  // y position is in the middle of the peak and bottom prices
+                y: y(20),  // y position is in the middle of the peak and bottom prices
                 dx: 250,  // offset in x direction
                 dy: -120   // offset in y direction
             }
