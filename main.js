@@ -174,10 +174,10 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
                     align: "middle",  // to align the text in the middle
                     wrap: width / 2  // to control the width of the text box
                 },
-                x: x(new Date("2019-01-01")),// x position is in the middle of the peak and bottom dates
-                y: y(20),  // y position is in the middle of the peak and bottom prices
-                dx: 250,  // offset in x direction
-                dy: -120   // offset in y direction
+                x: x(new Date("2019-06-01")),// x position is in the middle of the peak and bottom dates
+                y: y(70),  // y position is in the middle of the peak and bottom prices
+                dx: 0,  // offset in x direction
+                dy: 0   // offset in y direction
             }
         ]; 
         const makeAnnotations = d3.annotation().annotations(annotations);
