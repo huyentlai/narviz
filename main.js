@@ -167,14 +167,6 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
     if (isScene1) {
         const annotations = [
             {
-                type: d3.annotationCallout,
-                note: { title: "Major Event", label: `High: ${financialCrisisPeak.High}` },
-                x: x(new Date("2019-01-01")),
-                y: y(50),
-                dy: -40,
-                dx: 25 
-            },
-            {
                 type: d3.annotationXYThreshold,
                 note: {
                     title: `The market fell 40% over one year and two months.`,
