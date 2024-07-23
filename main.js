@@ -23,10 +23,10 @@ function showOverview() {
     d3.select("#visualization").append("div").attr("class", "description").text("The dataset gives informative context and details to understand these trends");
 
     // Chart 1: Closing Prices
-    createChart(window.data, "NVIDIA Stock Closing Prices (Jan 2017 - Jun 2022)", d => d.Close, "Closing Price (USD)", "Close");
+    createChart(window.data, "NVIDIA Stock Closing Prices (Jan 2017 - Jun 2022)", d => d.Close, "Closing Price (USD)", "Close", false);
 
     // Chart 2: Trading Volume
-    createChart(window.data, "NVIDIA Stock Trading Volume (Jan 2017 - Jun 2022)", d => d.Volume / 1e6, "Volume (Millions)", "Volume");
+    createChart(window.data, "NVIDIA Stock Trading Volume (Jan 2017 - Jun 2022)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false);
 
     const annotations1 = [
         {
@@ -63,10 +63,10 @@ function showScene1() {
     const filteredData = window.data.filter(d => d.Date < new Date("2021-03-01"));
 
     // Chart 1: Closing Prices
-    createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2021)", d => d.Close, "Closing Price (USD)", "Close");
+    createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2021)", d => d.Close, "Closing Price (USD)", "Close", true);
 
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2021)", d => d.Volume / 1e6, "Volume (Millions)", "Volume");
+    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2021)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false);
 
 }
 
@@ -77,13 +77,13 @@ function showScene2() {
     const filteredData = window.data.filter(d => d.Date >= new Date("2021-03-01"));
 
     // Chart 1: Closing Prices
-    createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2021 - End of Period)", d => d.Close, "Closing Price (USD)", "Close");
+    createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2021 - End of Period)", d => d.Close, "Closing Price (USD)", "Close", true);
 
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume (Mar 2021 - End of Period)", d => d.Volume / 1e6, "Volume (Millions)", "Volume");
+    createChart(filteredData, "NVIDIA Stock Trading Volume (Mar 2021 - End of Period)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false);
 }
 
-function createChart(data, title, yValueAccessor, yAxisLabel, yField) {
+function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEffect) {
     const svg = d3.select("#visualization").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -128,6 +128,30 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField) {
         .style("font-size", "18px")
         .text(yAxisLabel);
 
+    if (addHoverEffect) {
+        svg.selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("cx", d => x(d.Date))
+            .attr("cy", d => y(yValueAccessor(d)))
+            .attr("r", 4)
+            .attr("fill", "red")
+            .style("opacity", 0)
+            .on("mouseover", function(event, d) {
+                d3.select(this).transition().duration(100).style("opacity", 1);
+                tooltip.transition().duration(200).style("opacity", .9);
+                tooltip.html(`Date: ${d3.timeFormat("%B %d, %Y")(d.Date)}<br>Close: ${d.Close}`)
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(event, d) {
+                d3.select(this).transition().duration(100).style("opacity", 0);
+                tooltip.transition().duration(500).style("opacity", 0);
+            });
+    }
+
+    
     // Add tooltips for highest and lowest points
     const highest = d3.max(data, yValueAccessor);
     const lowest = d3.min(data, yValueAccessor);
