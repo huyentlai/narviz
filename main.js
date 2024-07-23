@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    d3.csv('path/to/NVDA.csv').then(function(data) {
+    d3.csv('NVDA.csv').then(function(data) {
         data.forEach(d => {
             d.Date = d3.timeParse("%Y-%m-%d")(d.Date);
             d.Close = +d.Close;
