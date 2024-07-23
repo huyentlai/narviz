@@ -89,19 +89,21 @@ function showOverview() {
     // Annotations
     const annotations = [
         {
-            note: { label: "Annotation1" },
+            type: d3.annotationCallout,
+            // note: { title: "Crypto collapse and datahouse crisis", label: `High: ${financialCrisisPeak.High}` },
+            note: { title: "Crypto collapse and datahouse crisis", label: "Annotation1" },
             x: x(new Date("2020-06-01")),
             y: y(window.data.find(d => d.Date.getTime() === new Date("2020-06-01").getTime()).Close),
             dy: -30,
             dx: 30
         },
-        {
+        /*{
             note: { label: "Annotation2" },
             x: x(new Date("2021-09-01")),
             y: y(window.data.find(d => d.Date.getTime() === new Date("2021-09-01").getTime()).Close),
             dy: -30,
             dx: 30
-        }
+        }*/
     ];
 
     const makeAnnotations = d3.annotation().annotations(annotations);
@@ -235,5 +237,5 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("text-anchor", "start")  // Align text to the start
         .style("font-size", "12px")
         .style("fill", "orange")
-        .text(`${label} price: ${yValueAccessor(point).toFixed(2)}`);
+        .text(`${label}: ${yValueAccessor(point).toFixed(2)}`);
 }
