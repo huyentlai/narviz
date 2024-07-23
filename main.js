@@ -131,10 +131,10 @@ function showScene1() {
     const filteredData = window.data.filter(d => d.Date < new Date("2020-03-01"));
 
     // Chart 1: Closing Prices
-    createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2020)", d => d.Close, "Closing Price (USD)", "Close", true, "red");
+    createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2020)", d => d.Close, "Closing Price (USD)", "Close", true, "red", true);
 
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2020)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red");
+    createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2020)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "red", true);
 
 }
 
@@ -145,15 +145,15 @@ function showScene2() {
     const filteredData = window.data.filter(d => d.Date >= new Date("2020-03-01"));
 
     // Chart 1: Closing Prices
-    createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2020 - End of Period)", d => d.Close, "Closing Price (USD)", "Close", true, "green");
+    createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2020 - End of Period)", d => d.Close, "Closing Price (USD)", "Close", true, "green", false);
     
     // Chart 2: Trading Volume
-    createChart(filteredData, "NVIDIA Stock Trading Volume (Mar 2020 - End of Period)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "green");
+    createChart(filteredData, "NVIDIA Stock Trading Volume (Mar 2020 - End of Period)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false, "green", false);
 }
 
-function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEffect, chartColor) {
+function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEffect, chartColor, isScene1) {
     const svg = d3.select("#visualization").append("svg")
-        .attr("width", width + margin.left + margin.right + 30)
+        .attr("width", width + margin.left + margin.right + 40)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -163,6 +163,34 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
 
     svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
     svg.append("g").call(d3.axisLeft(y));
+
+    if (isScene1) {
+        const annotations = [
+            {
+                type: d3.annotationCallout,
+                note: { title: "Major Event", label: `High: ${financialCrisisPeak.High}` },
+                x: x(new Date("2019-01-01")),
+                y: y(50),
+                dy: -40,
+                dx: 25 
+            },
+            {
+                type: d3.annotationXYThreshold,
+                note: {
+                    title: `The market fell 40% over one year and two months.`,
+                    label: `Plateau in closing price`,
+                    align: "middle",  // to align the text in the middle
+                    wrap: width / 2  // to control the width of the text box
+                },
+                x: x(new Date("2019-01-01")),// x position is in the middle of the peak and bottom dates
+                y: y(100),  // y position is in the middle of the peak and bottom prices
+                dx: 250,  // offset in x direction
+                dy: -120   // offset in y direction
+            }
+        ]; 
+        const makeAnnotations = d3.annotation().annotations(annotations);
+        svg.append("g").call(makeAnnotations);
+    }
 
     svg.append("path")
         .datum(data)
