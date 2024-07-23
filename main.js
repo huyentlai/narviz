@@ -21,10 +21,44 @@ const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("
 function showOverview() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("The dataset gives informative context and details to understand these trends");
+
+    // Chart 1: Closing Prices
+    createChart(window.data, "NVIDIA Stock Closing Prices (Jan 2017 - Jun 2022)", d => d.Close, "Closing Price (USD)", "Close");
+
+    // Chart 2: Trading Volume
+    createChart(window.data, "NVIDIA Stock Trading Volume (Jan 2017 - Jun 2022)", d => d.Volume / 1e6, "Volume (Millions)", "Volume");
+
+    const annotations1 = [
+        {
+            note: { label: "Drop due to market correction", title: "Market Event" },
+            x: x(new Date("2020-06-01")),
+            y: y(110),
+            dy: -50,
+            dx: 50
+        }
+    ];
+
+    const makeAnnotations1 = d3.annotation().annotations(annotations1);
+    svg.append("g").call(makeAnnotations1);
+
+    const annotations2 = [
+        {
+            note: { label: "Drop due to market correction", title: "Market Event" },
+            x: x(new Date("2020-03-01")),
+            y: y(210),
+            dy: -10,
+            dx: 10
+        }
+    ];
+
+    const makeAnnotations2 = d3.annotation().annotations(annotations2);
+    svg.append("g").call(makeAnnotations2);
+
 }
 
 function showScene1() {
     d3.select("#visualization").html("");  // Clear previous content
+    d3.select("#visualization").append("div").attr("class", "description").text("Scene 1 covers first period");
 
     const filteredData = window.data.filter(d => d.Date < new Date("2021-03-01"));
 
@@ -33,10 +67,12 @@ function showScene1() {
 
     // Chart 2: Trading Volume
     createChart(filteredData, "NVIDIA Stock Trading Volume (Jan 2017 - Mar 2021)", d => d.Volume / 1e6, "Volume (Millions)", "Volume");
+
 }
 
 function showScene2() {
     d3.select("#visualization").html("");  // Clear previous content
+    d3.select("#visualization").append("div").attr("class", "description").text("Scene 2 covers first period");
 
     const filteredData = window.data.filter(d => d.Date >= new Date("2021-03-01"));
 
