@@ -173,7 +173,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
                 note: {
                     title: `The market fell 40% over one year and two months.`,
                     label: `Plateau in closing price`,
-                    align: "right",  // to align the text in the middle
+                    align: "left",  // to align the text in the middle
                     wrap: width / 3  // to control the width of the text box
                 },
                 x: x(new Date("2018-12-01")),// x position is in the middle of the peak and bottom dates
@@ -192,7 +192,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
                 note: {
                     title: `Stock closing price soared 40% over one year and two months.`,
                     label: `Rise in closing price`,
-                    align: "right",  // to align the text in the middle
+                    align: "middle",  // to align the text in the middle
                     wrap: width / 2  // to control the width of the text box
                 },
                 x: x(new Date("2021-01-01")),// x position is in the middle of the peak and bottom dates
@@ -238,7 +238,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .attr("cx", d => x(d.Date))
             .attr("cy", d => y(yValueAccessor(d)))
             .attr("r", 4)
-            .attr("fill", "red")
+            .attr("fill", "orange")
             .style("opacity", 0)
             .on("mouseover", function(event, d) {
                 d3.select(this).transition().duration(100).style("opacity", 1);
@@ -268,7 +268,7 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("cx", x(point.Date))
         .attr("cy", y(yValueAccessor(point)))
         .attr("r", 5)
-        .attr("fill", "gray")
+        .attr("fill", "black")
         .on("mouseover", function(event, d) {
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(`${label}: ${yValueAccessor(point)} ${yField === "Volume" ? "M" : ""}`)
@@ -284,6 +284,6 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("y", y(yValueAccessor(point)) + 5)  // Align vertically with the point
         .attr("text-anchor", "start")  // Align text to the start
         .style("font-size", "12px")
-        .style("fill", "gray")
+        .style("fill", "black")
         .text(`${label}: ${yValueAccessor(point).toFixed(2)}`);
 }
