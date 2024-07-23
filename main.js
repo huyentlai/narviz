@@ -190,15 +190,22 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             {
                 type: d3.annotationXYThreshold,
                 note: {
-                    title: `Stock closing price soared 40% over one year and two months.`,
-                    label: `Rise in closing price`,
+                    title: `Improvement in data center`,
+                    label: `Steady rise`,
                     align: "middle",  // to align the text in the middle
-                    wrap: width / 2  // to control the width of the text box
+                    wrap: width / 3  // to control the width of the text box
                 },
-                x: x(new Date("2021-01-01")),// x position is in the middle of the peak and bottom dates
-                y: y(250),  // y position is in the middle of the peak and bottom prices
+                x: x(new Date("2020-08-01")),// x position is in the middle of the peak and bottom dates
+                y: y(190),  // y position is in the middle of the peak and bottom prices
                 dx: 0,  // offset in x direction
                 dy: 0   // offset in y direction
+            },
+            {
+                note: { label: "Soar in stock price", title: "AI boom" },
+                x: x(new Date("2021-10-01")),
+                y: y(260),
+                dy: -35,
+                dx: -45
             }
         ]; 
         const makeAnnotations = d3.annotation().annotations(annotations);
@@ -241,14 +248,14 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .attr("fill", "orange")
             .style("opacity", 0)
             .on("mouseover", function(event, d) {
-                d3.select(this).transition().duration('50').attr("opacity", '.5');
+                d3.select(this).transition().duration(50).style("opacity", .5);
                 tooltip.transition().duration(200).style("opacity", .9);
-                tooltip.html(`Close: ${d.Close}`)
+                tooltip.html(`Close:`)
                     .style("left", (event.pageX + 5) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function(event, d) {
-                d3.select(this).transition().duration('50').attr("opacity", '1');
+                d3.select(this).transition().duration(50).style("opacity", 1);
                 tooltip.transition().duration(200).style("opacity", 0);
             });
     }
