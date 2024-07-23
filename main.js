@@ -18,6 +18,8 @@ const margin = { top: 50, right: 50, bottom: 120, left: 120 },
 // Tooltip div
 const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
+const cutOffDate = "2020-02-01"
+
 function showOverview() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("The dataset gives informative context and details to understand these trends");
@@ -50,7 +52,7 @@ function showOverview() {
 
     // Section 1: Jan 2017 - Mar 2020
     svg.append("path")
-        .datum(window.data.filter(d => d.Date < new Date("2020-03-01")))
+        .datum(window.data.filter(d => d.Date < new Date(cutOffDate)))
         .attr("fill", "none")
         .attr("stroke", "red")
         .attr("stroke-width", 2)
@@ -58,7 +60,7 @@ function showOverview() {
 
     // Section 2: Mar 2020 - Jun 2022
     svg.append("path")
-        .datum(window.data.filter(d => d.Date >= new Date("2020-03-01") && d.Date <= new Date("2022-06-30")))
+        .datum(window.data.filter(d => d.Date >= new Date(cutOffDate) && d.Date <= new Date("2022-06-30")))
         .attr("fill", "none")
         .attr("stroke", "green")
         .attr("stroke-width", 2)
@@ -128,7 +130,7 @@ function showScene1() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("Scene 1 covers first period");
 
-    const filteredData = window.data.filter(d => d.Date < new Date("2020-03-01"));
+    const filteredData = window.data.filter(d => d.Date < new Date(cutOffDate));
 
     // Chart 1: Closing Prices
     createChart(filteredData, "NVIDIA Stock Closing Prices (Jan 2017 - Mar 2020)", d => d.Close, "Closing Price (USD)", "Close", true, "red", true);
@@ -142,7 +144,7 @@ function showScene2() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("Scene 2 covers first period");
 
-    const filteredData = window.data.filter(d => d.Date >= new Date("2020-03-01"));
+    const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate));
 
     // Chart 1: Closing Prices
     createChart(filteredData, "NVIDIA Stock Closing Prices (Mar 2020 - End of Period)", d => d.Close, "Closing Price (USD)", "Close", true, "green", false);
@@ -172,10 +174,10 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
                     title: `The market fell 40% over one year and two months.`,
                     label: `Plateau in closing price`,
                     align: "middle",  // to align the text in the middle
-                    wrap: width / 2  // to control the width of the text box
+                    wrap: width / 3  // to control the width of the text box
                 },
                 x: x(new Date("2019-06-01")),// x position is in the middle of the peak and bottom dates
-                y: y(70),  // y position is in the middle of the peak and bottom prices
+                y: y(60),  // y position is in the middle of the peak and bottom prices
                 dx: 0,  // offset in x direction
                 dy: 0   // offset in y direction
             }
