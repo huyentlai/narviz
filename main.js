@@ -111,11 +111,18 @@ function showOverview() {
 
     const annotations = [
             {
-                note: { label: "Significant rise in stock price", title: "Major Event" },
-                x: x(new Date("2019-12-01")),
-                y: y(240),
+                note: { label: "Plateau in stock price", title: "Cryto crash and datahouse crisis" },
+                x: x(new Date("2020-06-01")),
+                y: y(window.data.find(d => d.Date.getTime() === new Date("2020-06-01").getTime()).Close),
+                dy: -90,
+                dx: -10
+            },
+            {
+                note: { label: " Soar in stock price", title: "AI boom" },
+                x: x(new Date("2021-06-01")),
+                y: y(window.data.find(d => d.Date.getTime() === new Date("2021-06-01").getTime()).Close),
                 dy: -50,
-                dx: -50
+                dx: -90
             }
         ];
 
@@ -161,7 +168,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
     const x = d3.scaleTime().domain(d3.extent(data, d => d.Date)).range([0, width]);
     const y = d3.scaleLinear().domain([0, d3.max(data, yValueAccessor)]).range([height, 0]);
 
-    svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
+    svg.append("g").attr("transform", "rotate(-45)", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
     svg.append("g").call(d3.axisLeft(y));
 
     svg.append("path")
@@ -181,13 +188,12 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
         .style("font-size", "24px")
         .text(title);
 
-    svg.append("text")
+    /*svg.append("text")
         .attr("x", width / 2)
-        .attr("transform", "rotate(-45)")
         .attr("y", height + margin.bottom - 20)
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
-        .text("Date");
+        .text("Date");*/
 
     svg.append("text")
         .attr("transform", "rotate(-90)")
