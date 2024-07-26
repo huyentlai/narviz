@@ -84,7 +84,7 @@ function showOverview() {
                 .attr("stroke-dashoffset", 0);
 
     // Section 2: Mar 2020 - Jun 2022
-    svg.append("path")
+    const path2 = svg.append("path")
         .datum(window.data.filter(d => d.Date >= new Date(cutOffDate) && d.Date <= new Date("2022-06-30")))
         .attr("fill", "none")
         .attr("stroke", "green")
@@ -105,6 +105,14 @@ function showOverview() {
         .on("click", function() {
             showScene2();  // Navigate to Scene 2
         });
+
+    const totalLength2 = path2.node().getTotalLength();
+    path2.attr("stroke-dasharray", totalLength2 + " " + totalLength2)
+                .attr("stroke-dashoffset", totalLength2)
+                .transition()
+                .duration(1200)
+                .ease(d3.easeLinear)
+                .attr("stroke-dashoffset", 0);
 
     svg.append("text")
         .attr("x", width / 2)
