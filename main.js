@@ -50,30 +50,8 @@ function showOverview() {
         .x(d => x(d.Date))
         .y(d => y(d.Close));
 
-    const annotations1 = [
-            {
-                note: { label: "Plateau in stock price", title: "Cryto crash and datahouse crisis" },
-                x: x(new Date("2019-01-01")),
-                y: y(50),
-                dy: -40,
-                dx: 25
-            }
-        ];
-    
-    const annotations2 = [
-            {
-                note: { label: " Soar in stock price", title: "AI boom" },
-                x: x(new Date("2021-10-01")),
-                y: y(260),
-                dy: -35,
-                dx: -45
-            }
-        ];
-    const makeAnnotations1 = d3.annotation().annotations(annotations1);
-    const makeAnnotations2 = d3.annotation().annotations(annotations2);
-
     // Section 1: Jan 2017 - Mar 2020
-    const path1 = svg.append("path")
+    svg.append("path")
         .datum(window.data.filter(d => d.Date < new Date(cutOffDate)))
         .attr("fill", "none")
         .attr("stroke", "red")
@@ -94,19 +72,9 @@ function showOverview() {
         .on("click", function() {
             showScene1();
         });
-    
-    const totalLength1 = path1.node().getTotalLength();
-    path1.attr("stroke-dasharray", `${totalLength1} ${totalLength1}`)
-        .attr("stroke-dashoffset", totalLength1)
-        .transition()
-        .duration(2000)
-        .attr("stroke-dashoffset", 0)
-        .on("end", function() {
-            svg.append("g").call(makeAnnotations1);
-        });
-    
+
     // Section 2: Mar 2020 - Jun 2022
-    const path2 = svg.append("path")
+    svg.append("path")
         .datum(window.data.filter(d => d.Date >= new Date(cutOffDate) && d.Date <= new Date("2022-06-30")))
         .attr("fill", "none")
         .attr("stroke", "green")
@@ -127,17 +95,7 @@ function showOverview() {
         .on("click", function() {
             showScene2();  // Navigate to Scene 2
         });
-    
-    const totalLength2 = path2.node().getTotalLength();
-    path2.attr("stroke-dasharray", `${totalLength2} ${totalLength2}`)
-        .attr("stroke-dashoffset", totalLength2)
-        .transition()
-        .duration(2000)
-        .attr("stroke-dashoffset", 0)
-        .on("end", function() {
-            svg.append("g").call(makeAnnotations2);
-        });
-    
+
     svg.append("text")
         .attr("x", width / 2)
         .attr("y", -20)
@@ -176,16 +134,14 @@ function showOverview() {
     const makeAnnotations = d3.annotation().annotations(annotations);
     svg.append("g").call(makeAnnotations);*/
 
-    const annotations1 = [
+    const annotations = [
             {
                 note: { label: "Plateau in stock price", title: "Cryto crash and datahouse crisis" },
                 x: x(new Date("2019-01-01")),
                 y: y(50),
                 dy: -40,
                 dx: 25
-            }
-        ];
-    const annotations2 = [
+            },
             {
                 note: { label: " Soar in stock price", title: "AI boom" },
                 x: x(new Date("2021-10-01")),
@@ -194,9 +150,9 @@ function showOverview() {
                 dx: -45
             }
         ];
-    const makeAnnotations1 = d3.annotation().annotations(annotations1);
-    const makeAnnotations2 = d3.annotation().annotations(annotations1);
-  //svg.append("g").call(makeAnnotations);
+
+    const makeAnnotations = d3.annotation().annotations(annotations);
+    svg.append("g").call(makeAnnotations);
 
 }
 
