@@ -56,7 +56,11 @@ function showOverview() {
         .attr("fill", "none")
         .attr("stroke", "red")
         .attr("stroke-width", 2)
-        .attr("d", line1);
+        .attr("d", line1)
+        .style("cursor", "pointer")  // Indicate clickable area
+        .on("click", function() {
+            showScene1();
+        });
 
     // Section 2: Mar 2020 - Jun 2022
     svg.append("path")
@@ -64,7 +68,11 @@ function showOverview() {
         .attr("fill", "none")
         .attr("stroke", "green")
         .attr("stroke-width", 2)
-        .attr("d", line2);
+        .attr("d", line2)
+        .style("cursor", "pointer")  // Indicate clickable area
+        .on("click", function() {
+            showScene2();  // Navigate to Scene 2
+        });
 
     svg.append("text")
         .attr("x", width / 2)
