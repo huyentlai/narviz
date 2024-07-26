@@ -59,6 +59,7 @@ function showOverview() {
                 dx: 25
             }
         ];
+    
     const annotations2 = [
             {
                 note: { label: " Soar in stock price", title: "AI boom" },
@@ -69,7 +70,7 @@ function showOverview() {
             }
         ];
     const makeAnnotations1 = d3.annotation().annotations(annotations1);
-    const makeAnnotations2 = d3.annotation().annotations(annotations1);
+    const makeAnnotations2 = d3.annotation().annotations(annotations2);
 
     // Section 1: Jan 2017 - Mar 2020
     const path1 = svg.append("path")
@@ -93,6 +94,7 @@ function showOverview() {
         .on("click", function() {
             showScene1();
         });
+    
     const totalLength1 = path1.node().getTotalLength();
     path1.attr("stroke-dasharray", `${totalLength1} ${totalLength1}`)
         .attr("stroke-dashoffset", totalLength1)
@@ -125,6 +127,7 @@ function showOverview() {
         .on("click", function() {
             showScene2();  // Navigate to Scene 2
         });
+    
     const totalLength2 = path2.node().getTotalLength();
     path2.attr("stroke-dasharray", `${totalLength2} ${totalLength2}`)
         .attr("stroke-dashoffset", totalLength2)
