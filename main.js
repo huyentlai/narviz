@@ -74,7 +74,7 @@ function showOverview() {
    
     // Section 1: Jan 2017 - Mar 2020
     
-    const path1 = svg.append("path")
+    svg.append("path")
         .datum(window.data.filter(d => d.Date < new Date(cutOffDate)))
         .attr("fill", "none")
         .attr("stroke", "red")
@@ -98,7 +98,7 @@ function showOverview() {
     
 
     // Section 2: Mar 2020 - Jun 2022
-    const path2 = svg.append("path")
+    svg.append("path")
         .datum(window.data.filter(d => d.Date >= new Date(cutOffDate) && d.Date <= new Date("2022-06-30")))
         .attr("fill", "none")
         .attr("stroke", "green")
