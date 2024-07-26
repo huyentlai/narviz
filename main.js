@@ -73,7 +73,8 @@ function showOverview() {
         })
         .on("click", function() {
             showScene1();
-        });
+        })
+        ;
     
     const totalLength1 = path1.node().getTotalLength();
     path1.attr("stroke-dasharray", totalLength1 + " " + totalLength1)
@@ -81,7 +82,10 @@ function showOverview() {
                 .transition()
                 .duration(1200)
                 .ease(d3.easeLinear)
-                .attr("stroke-dashoffset", 0);
+                .attr("stroke-dashoffset", 0)
+                .on("end", function() {
+                    svg.append("g").call(path2);
+                });
 
     // Section 2: Mar 2020 - Jun 2022
     const path2 = svg.append("path")
