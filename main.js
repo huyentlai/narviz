@@ -58,6 +58,17 @@ function showOverview() {
         .attr("stroke-width", 2)
         .attr("d", line1)
         .style("cursor", "pointer")  // Indicate clickable area
+        .on("mouseover", function(event, d) {
+            d3.select(this).attr("stroke-width", 4);
+            tooltip.transition().duration(200).style("opacity", .9);
+            tooltip.html("Click to see detailed view of Stable Period")
+                .style("left", (event.pageX + 5) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            d3.select(this).attr("stroke-width", 2);
+            tooltip.transition().duration(500).style("opacity", 0);
+        })
         .on("click", function() {
             showScene1();
         });
@@ -70,6 +81,17 @@ function showOverview() {
         .attr("stroke-width", 2)
         .attr("d", line2)
         .style("cursor", "pointer")  // Indicate clickable area
+        .on("mouseover", function(event, d) {
+            d3.select(this).attr("stroke-width", 4);
+            tooltip.transition().duration(200).style("opacity", .9);
+            tooltip.html("Click to see detailed of AI boom")
+                .style("left", (event.pageX + 5) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            d3.select(this).attr("stroke-width", 2);
+            tooltip.transition().duration(500).style("opacity", 0);
+        })        
         .on("click", function() {
             showScene2();  // Navigate to Scene 2
         });
