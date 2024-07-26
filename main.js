@@ -50,8 +50,29 @@ function showOverview() {
         .x(d => x(d.Date))
         .y(d => y(d.Close));
 
+    const line = d3.line()
+        .x(d => x(d.Date))
+        .y(d => y(d.Close));
+
+    const path = svg.append("path")
+        .datum(window.data)
+        .attr("fill", "none")
+        .attr("stroke", "red")
+        .attr("stroke-width", 2)
+        .attr("d", line)
+
+    const totalLength = path.node().getTotalLength();
+    path.attr("stroke-dasharray", totalLength + " " + totalLength)
+                .attr("stroke-dashoffset", totalLength1)
+                .transition()
+                .duration(1200)
+                .ease(d3.easeLinear)
+                .attr("stroke-dashoffset", 0)
+                .on("end", function() {
+                    svg.append("g").call(path1);
+                });
+   
     // Section 1: Jan 2017 - Mar 2020
-    
     
     const path1 = svg.append("path")
         .datum(window.data.filter(d => d.Date < new Date(cutOffDate)))
@@ -73,19 +94,8 @@ function showOverview() {
         })
         .on("click", function() {
             showScene1();
-        })
-        ;
+        });
     
-    const totalLength1 = path1.node().getTotalLength();
-    path1.attr("stroke-dasharray", totalLength1 + " " + totalLength1)
-                .attr("stroke-dashoffset", totalLength1)
-                .transition()
-                .duration(1200)
-                .ease(d3.easeLinear)
-                .attr("stroke-dashoffset", 0)
-                .on("end", function() {
-                    svg.append("g").call(path2);
-                });
 
     // Section 2: Mar 2020 - Jun 2022
     const path2 = svg.append("path")
@@ -110,13 +120,6 @@ function showOverview() {
             showScene2();  // Navigate to Scene 2
         });
 
-    const totalLength2 = path2.node().getTotalLength();
-    path2.attr("stroke-dasharray", totalLength2 + " " + totalLength2)
-                .attr("stroke-dashoffset", totalLength2)
-                .transition()
-                .duration(1200)
-                .ease(d3.easeLinear)
-                .attr("stroke-dashoffset", 0);
 
     svg.append("text")
         .attr("x", width / 2)
