@@ -51,7 +51,9 @@ function showOverview() {
         .y(d => y(d.Close));
 
     // Section 1: Jan 2017 - Mar 2020
-    svg.append("path")
+    
+    
+    const path1 = svg.append("path")
         .datum(window.data.filter(d => d.Date < new Date(cutOffDate)))
         .attr("fill", "none")
         .attr("stroke", "red")
@@ -72,6 +74,14 @@ function showOverview() {
         .on("click", function() {
             showScene1();
         });
+    
+    const totalLength1 = path1.node().getTotalLength();
+    path1.attr("stroke-dasharray", totalLength1 + " " + totalLength1)
+                .attr("stroke-dashoffset", totalLength1)
+                .transition()
+                .duration(1200)
+                .ease(d3.easeLinear)
+                .attr("stroke-dashoffset", 0);
 
     // Section 2: Mar 2020 - Jun 2022
     svg.append("path")
