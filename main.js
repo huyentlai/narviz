@@ -189,8 +189,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
     const yRight = d3.scaleLinear().domain([0, d3.max(data, yValueAccessorRight)]).range([height, 0]);
 
     svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
-    //svg.append("g").call(d3.axisLeft(yLeft));
-    svg.append("g").attr("transform", "translate(-10,0)").call(d3.axisLeft(yLeft));
+    svg.append("g").call(d3.axisLeft(yLeft));
     svg.append("g").attr("transform", "translate(" + width + ",0)").call(d3.axisRight(yRight));
 
     const lineLeft = d3.line()
@@ -224,7 +223,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
 
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", -margin.left + 80)
+        .attr("y", -margin.left - 80)
         .attr("x", -height / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
