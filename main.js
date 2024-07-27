@@ -19,7 +19,6 @@ const margin = { top: 50, right: 50, bottom: 120, left: 120 },
 const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
 const cutOffDate = "2020-02-01";
-
 const cutOffDate1 = "2019-12-01";
 const cutOffDate2 = "2022-12-10";
 
@@ -43,7 +42,6 @@ function showOverview() {
         .x(d => x(d.Date))
         .y(d => y(d.Close));
 
-    // Section 1: Jan 2017 - Mar 2020
     svg.append("path")
         .datum(window.data.filter(d => d.Date < new Date(cutOffDate1)))
         .attr("fill", "none")
@@ -66,7 +64,6 @@ function showOverview() {
             showScene1();
         });
 
-    // Section 2: Mar 2020 - Jun 2022
     svg.append("path")
         .datum(window.data.filter(d => d.Date >= new Date(cutOffDate1) && d.Date < new Date(cutOffDate2)))
         .attr("fill", "none")
@@ -89,14 +86,13 @@ function showOverview() {
             showScene2();
         });
 
-    // Section 3: cutOffDate2 - end
     svg.append("path")
         .datum(window.data.filter(d => d.Date >= new Date(cutOffDate2)))
         .attr("fill", "none")
         .attr("stroke", "blue")
         .attr("stroke-width", 2)
         .attr("d", line)
-        .style("cursor", "pointer")  // Indicate clickable area
+        .style("cursor", "pointer")
         .on("mouseover", function(event, d) {
             d3.select(this).attr("stroke-width", 4);
             tooltip.transition().duration(200).style("opacity", .9);
@@ -109,9 +105,9 @@ function showOverview() {
             tooltip.transition().duration(500).style("opacity", 0);
         })
         .on("click", function() {
-            showScene3();  // Navigate to Scene 3
-        });   
-    
+            showScene3();
+        });
+
     svg.append("text")
         .attr("x", width / 2)
         .attr("y", -20)
@@ -127,7 +123,6 @@ function showOverview() {
         .style("font-size", "18px")
         .text("Closing Price (USD)");
 
-    // Annotations
     const annotations = [
         {
             note: { label: "Plateau in stock price", title: "Crypto crash and datahouse crisis" },
@@ -155,7 +150,7 @@ function showOverview() {
             y: d => y(d.Close)
         })
         .annotations(annotations.map(annotation => {
-            annotation.color = "orange";  // Set annotation color to orange
+            annotation.color = "orange";
             return annotation;
         }));
     svg.append("g").call(makeAnnotations);
@@ -169,7 +164,7 @@ function showScene1() {
 
     createChart(
         filteredData,
-        "NVIDIA Stock Closing Prices and Trading Volume Period 1)",
+        "NVIDIA Stock Closing Prices and Trading Volume Period 1",
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
@@ -186,7 +181,7 @@ function showScene2() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("NVIDIA's stock began to recover in mid-2019, driven by robust growth in its data center business. The company's GPUs became essential for AI and machine learning applications, leading to higher sales and improved profitability. The COVID-19 pandemic further accelerated the adoption of digital technologies, boosting demand for NVIDIA's products. The company also benefitted from the strong performance of its gaming segment, driven by the launch of new GPUs and the overall increase in gaming activity during the pandemic​ (InvestorPlace)​​ (Nasdaq)​.");
 
-    const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate1) && d.Date < new Date(cutOffDate2)))
+    const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate1) && d.Date < new Date(cutOffDate2));
 
     createChart(
         filteredData,
@@ -202,6 +197,7 @@ function showScene2() {
         true
     );
 }
+
 function showScene3() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("Scene 3 covers third period");
@@ -252,7 +248,6 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("stroke", chartColorRight)
         .attr("stroke-width", 2)
         .attr("d", lineRight);
-
 
     svg.append("path")
         .datum(data)
@@ -307,7 +302,6 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             });
     }
 
-    // Add fixed tooltips for highest and lowest points
     const highest = d3.max(data, yValueAccessorLeft);
     const lowest = d3.min(data, yValueAccessorLeft);
     const highestPoint = data.find(d => yValueAccessorLeft(d) === highest);
@@ -342,7 +336,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 y: d => y(d.Close)
             })
             .annotations(annotations.map(annotation => {
-                annotation.color = "orange";  // Set annotation color to orange
+                annotation.color = "orange";
                 return annotation;
             }));
         svg.append("g").call(makeAnnotations);
