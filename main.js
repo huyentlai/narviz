@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+//add buttons dynamically
+d3.select("body").append("button").attr("class", "button-orange").text("Overview").on("click", showOverview);
+d3.select("body").append("button").attr("class", "button-red").text("Scene 1").on("click", showScene1);
+d3.select("body").append("button").attr("class", "button-green").text("Scene 2").on("click", showScene2);
+d3.select("body").append("button").attr("class", "button-blue").text("Scene 3").on("click", showScene3);
+
 // Define margins and dimensions
 const margin = { top: 50, right: 50, bottom: 120, left: 120 },
       width = 800 - margin.left - margin.right,
@@ -29,7 +35,7 @@ function showOverview() {
         .attr("class", "description")
         .style("padding-left", "40px")  // Add left padding
         .style("padding-right", "40px") 
-        .style("fill", "grey")
+        .style("fill", "darkgrey")
         .style("font-size", "14px")  // Set the font size to a smaller value
         .html(`
             <h2 style="font-size: 18px;">NVIDIA Stock Performance Overview</h2>
@@ -200,6 +206,7 @@ function showScene1() {
         "red",
         "grey",
         true,
+        false,
         false
     );
 }
@@ -233,7 +240,8 @@ function showScene2() {
         "green",
         "grey",
         false,
-        true
+        true,
+        false
     );
 }
 
@@ -266,11 +274,12 @@ function showScene3() {
         "blue",
         "grey",
         false,
-        false
+        false.
+        true
     );
 }
 
-function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAccessorRight, yAxisLabelRight, addHoverEffect, chartColorLeft, chartColorRight, isScene1, isScene2) {
+function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAccessorRight, yAxisLabelRight, addHoverEffect, chartColorLeft, chartColorRight, isScene1, isScene2, isScene3) {
     const svg = d3.select("#visualization").append("svg")
         .attr("width", width + margin.left + margin.right + 40)
         .attr("height", height + margin.top + margin.bottom)
@@ -384,7 +393,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                     wrap: width / 3
                 },
                 x: x(new Date("2018-12-01")),
-                y: yLeft(60),
+                y: yLeft(65),
                 dx: 0,
                 dy: 0
             }
@@ -423,9 +432,41 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             {
                 note: { label: "Soar in stock price", title: "AI boom" },
                 x: x(new Date("2021-11-01")),
-                y: yLeft(260),
+                y: yLeft(250),
                 dy: -35,
                 dx: -45
+            }
+        ];
+        const makeAnnotations = d3.annotation()
+            .annotations(annotations)
+            .editMode(false)
+            .notePadding(15)
+            .type(d3.annotationCalloutElbow)
+            .accessors({
+                x: d => x(new Date(d.Date)),
+                y: d => y(d.Close)
+            })
+            .annotations(annotations.map(annotation => {
+                annotation.color = "orange";
+                return annotation;
+            }));
+        svg.append("g").call(makeAnnotations);
+    }
+    
+    if (isScene3) {
+        const annotations = [
+            {
+                type: d3.annotationXYThreshold,
+                note: {
+                    title: `Dip and stable`,
+                    label: `Dip and blah blah`,
+                    align: "middle",
+                    wrap: width / 3
+                },
+                x: x(new Date("2022-03-01")),
+                y: yLeft(180),
+                dx: 0,
+                dy: 0
             }
         ];
         const makeAnnotations = d3.annotation()
