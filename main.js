@@ -140,14 +140,14 @@ function showOverview() {
 
     const annotations = [
         {
-            note: { label: "Plateau in stock price", title: "Crypto crash and datahouse crisis" },
+            note: { label: "Decrease in stock price", title: "Crypto Crash" },
             x: x(new Date("2019-01-01")),
             y: y(50),
             dy: -40,
             dx: 25
         },
         {
-            note: { label: "Soar in stock price", title: "AI boom" },
+            note: { label: "Steady rise to volatile peak", title: "Data Center Boom" },
             x: x(new Date("2021-10-20")),
             y: y(250),
             dy: -35,
@@ -181,17 +181,17 @@ function showScene1() {
         .style("fill", "grey")
         .style("font-size", "14px")  // Set the font size to a smaller value
         .html(`
-            <h2 style="font-size: 18px;">NVIDIA Stock Performance Overview</h2>
-            <p>NVIDIA's stock performance from early 2018 to mid-2022 encapsulates the volatility and dynamism inherent in the technology sector. This period can be divided into three significant phases marked by distinct trends and driving factors. Initially, from early 2018 to mid-2019, NVIDIA faced a sharp decline in stock price largely due to external market forces. The collapse of the cryptocurrency market led to an oversupply of GPUs, which, coupled with the impact of the US-China trade war, significantly hindered NVIDIA’s growth. The inventory overhang and increased costs due to tariffs added to the pressure, causing the stock to plunge​ (Nasdaq)​​ (InvestorPlace)​.</p>
-            <p>The subsequent period from mid-2019 to early 2021 marked a significant recovery for NVIDIA, driven by the burgeoning data center business and the rise of AI and machine learning applications. During this phase, NVIDIA capitalized on the growing demand for its GPUs, which became essential in various high-performance computing applications. The COVID-19 pandemic further accelerated this demand as more businesses and individuals turned to digital solutions, boosting NVIDIA’s gaming and data center segments. This robust growth led to a steady increase in stock price, showcasing the company's resilience and strategic positioning in the tech industry​ (InvestorPlace)​​ (Nasdaq)​.</p>
-            <p>The final phase from early 2021 to mid-2022 saw NVIDIA’s stock reaching its peak before experiencing increased volatility and a general decline. This period was marked by significant market corrections within the tech sector, coupled with NVIDIA facing supply chain issues and regulatory scrutiny over its proposed acquisition of ARM. Despite these challenges, the company's long-term growth prospects remained strong, driven by the continued expansion in AI and data center markets. However, the immediate market reactions to these challenges led to a pullback in stock price, reflecting the broader uncertainties in the tech industry​ (Nasdaq)​​ (InvestorPlace)​.</p>
+            <h2 style="font-size: 18px;">Crypto Crash (early 2018 to end of 2019)</h2>
+            <p>Even thought there was increase in certain segments of this period, the overall trend was definitely downward considering the general market was forward-looking and compared to the company previous' strong growth. There were two main catalysts in this downward trend of closing price in Nvidia stock. They seemed like separate factors, but these two reasons are strongly tied together and they both had consequences that caused the decreasing trend to continue over these two years.</p>
+            <p>First of all, the crypto burst or "Crypto Crash", i.e. the crash of the cryptocurrency market early 2018, has unanimously affected NVIDIA stock price. Cryptocurrency is heavily dependent on CPUs and GPUs. A slowing global economy as well as  escalating trade war between the USA with China have caused NVIDIA to have it steep drop in October 2018.</p>
+            <p>But it didn't stop from there, NVIDIA stock price continued to drop drastically all the way to January 2019, because of the second catalyst - its third-quarter report release. This was disappointing to Wall Street, on which the company attributed this pummeling to the effects of a "crypto hangover". </p>
         `);
 
     const filteredData = window.data.filter(d => d.Date < new Date(cutOffDate1));
 
     createChart(
         filteredData,
-        "NVIDIA Stock Closing Prices and Trading Volume Period 1",
+        "NVIDIA Stock Closing Prices and Trading Volume: early 2018 to end of 2019",
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
@@ -215,10 +215,9 @@ function showScene2() {
         .style("fill", "grey")
         .style("font-size", "14px")  // Set the font size to a smaller value
         .html(`
-            <h2 style="font-size: 18px;">NVIDIA Stock Performance Overview</h2>
-            <p>NVIDIA's stock performance from early 2018 to mid-2022 encapsulates the volatility and dynamism inherent in the technology sector. This period can be divided into three significant phases marked by distinct trends and driving factors. Initially, from early 2018 to mid-2019, NVIDIA faced a sharp decline in stock price largely due to external market forces. The collapse of the cryptocurrency market led to an oversupply of GPUs, which, coupled with the impact of the US-China trade war, significantly hindered NVIDIA’s growth. The inventory overhang and increased costs due to tariffs added to the pressure, causing the stock to plunge​ (Nasdaq)​​ (InvestorPlace)​.</p>
-            <p>The subsequent period from mid-2019 to early 2021 marked a significant recovery for NVIDIA, driven by the burgeoning data center business and the rise of AI and machine learning applications. During this phase, NVIDIA capitalized on the growing demand for its GPUs, which became essential in various high-performance computing applications. The COVID-19 pandemic further accelerated this demand as more businesses and individuals turned to digital solutions, boosting NVIDIA’s gaming and data center segments. This robust growth led to a steady increase in stock price, showcasing the company's resilience and strategic positioning in the tech industry​ (InvestorPlace)​​ (Nasdaq)​.</p>
-            <p>The final phase from early 2021 to mid-2022 saw NVIDIA’s stock reaching its peak before experiencing increased volatility and a general decline. This period was marked by significant market corrections within the tech sector, coupled with NVIDIA facing supply chain issues and regulatory scrutiny over its proposed acquisition of ARM. Despite these challenges, the company's long-term growth prospects remained strong, driven by the continued expansion in AI and data center markets. However, the immediate market reactions to these challenges led to a pullback in stock price, reflecting the broader uncertainties in the tech industry​ (Nasdaq)​​ (InvestorPlace)​.</p>
+            <h2 style="font-size: 18px;">Data Center Boom: end of 2019 to early 2021</h2>
+            <p>After the dreadful drop in price in the previous year, starting in mid-2019, NVIDIA's stock began to rise again. This whole period of time saw big jumps, and sometimes almost vertical increase, largely thanks to its data center game well-played, sophisticated high-end technology that answered the demand of big markets such as China's, and AI prospects. </p>
+            <p>The super-jump in late 2021 could also be explained with a post-Covid-19 report release - a special circumstance where during the epidemic, more people had to stay work from home and needed better technology form their own connection. </p>
         `);
 
     const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate1) && d.Date < new Date(cutOffDate2));
@@ -319,7 +318,6 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("d", lineLeft);
 
 
-
     svg.append("text")
         .attr("x", width / 2)
         .attr("y", -20)
@@ -407,8 +405,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             {
                 type: d3.annotationXYThreshold,
                 note: {
-                    title: `The market fell 40% over one year and two months.`,
-                    label: `Plateau in closing price`,
+                    title: `Highest to Lowest point: NVIDIA's stock price fell 56% over about 3 months.`,
+                    label: `General downward trend`,
                     align: "left",
                     wrap: width / 3
                 },
