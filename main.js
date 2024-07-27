@@ -430,8 +430,40 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         svg.append("g").call(makeAnnotations);
     }
     
+     const legend = svg.append("g")
+        .attr("transform", `translate(${width - 100}, ${height + 70})`);
+
+    legend.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("fill", chartColorLeft);
+
+    legend.append("text")
+        .attr("x", 20)
+        .attr("y", 10)
+        .text("Closing Prices")
+        .style("font-size", "12px")
+        .attr("alignment-baseline", "middle");
+
+    legend.append("rect")
+        .attr("x", 0)
+        .attr("y", 20)
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("fill", chartColorRight)
+        .attr("stroke-dasharray", "2,2");  // Make the legend for the right line dotted
+
+    legend.append("text")
+        .attr("x", 20)
+        .attr("y", 30)
+        .text("Trading Volume")
+        .style("font-size", "12px")
+        .attr("alignment-baseline", "middle");
+
     const titleGroup = svg.append("g")
-    .attr("transform", "translate(0, 500)");  // Add a translation to move the title down
+    .attr("transform", "translate(0, 700)");  // Add a translation to move the title down
 
     titleGroup.append("text")
     .attr("x", width / 2)
