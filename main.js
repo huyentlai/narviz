@@ -250,12 +250,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
         .attr("d", d3.line()
             .x(d => x(d.Date))
             .y(d => y(yValueAccessor(d)))
-        )
-        .attr("opacity", 0)
-       .transition()
-       .delay((d, i) => i * 100)
-       .duration(200)
-       .attr("opacity", 1);
+        );
 
 
     
