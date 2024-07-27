@@ -276,29 +276,6 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .append("circle")
             .attr("cx", d => x(d.Date))
             .attr("cy", d => y(yValueAccessor(d)))
-            .attr("r", 5)
-            .attr("fill", "orange")
-            .style("opacity", 0)
-            .on("mouseover", function(event, d) {
-                tooltip.transition()
-                       .duration(200)
-                       .style("opacity", .9);
-                tooltip.html(`Close: ${yValueAccessor(d)}`)
-                       .style("left", (event.pageX + 5) + "px")
-                       .style("top", (event.pageY - 28) + "px");
-            })
-            .on("mouseout", () => {
-                tooltip.transition()
-                       .duration(500)
-                       .style("opacity", 0);
-            })
-
-        /*svg.selectAll("circle")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("cx", d => x(d.Date))
-            .attr("cy", d => y(yValueAccessor(d)))
             .attr("r", 4)
             .attr("fill", "yellow")
             .style("opacity", 0)
@@ -312,7 +289,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .on("mouseout", function(event, d) {
                 d3.select(this).transition().duration(100).style("opacity", 0);
                 tooltip.transition().duration(500).style("opacity", 0);
-            }); */
+            }); 
     }
 
     // Add fixed tooltips for highest and lowest points
