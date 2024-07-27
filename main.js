@@ -252,6 +252,8 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .y(d => y(yValueAccessor(d)))
         );
 
+
+    
     svg.append("text")
         .attr("x", width / 2)
         .attr("y", -20)
@@ -268,7 +270,34 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
         .text(yAxisLabel);
 
     if (addHoverEffect) {
-        svg.selectAll("circle")
+        svg.selectAll("dot")
+               .data(data)
+               .enter()
+               .append("circle")
+               .attr("cx", d => x(d.Date))
+               .attr("cy", d => y(yValueAccessor(d)))
+               .attr("r", 5)
+               .attr("fill", "orange")
+               .on("mouseover", function(event, d) => {
+                    tooltip.transition()
+                           .duration(200)
+                           .style("opacity", .9);
+                    tooltip.html(`Close: ${yValueAccessor(d)}`)
+                           .style("left", (event.pageX + 5) + "px")
+                           .style("top", (event.pageY - 28) + "px");
+               })
+               .on("mouseout", () => {
+                    tooltip.transition()
+                           .duration(500)
+                           .style("opacity", 0);
+               })
+               .attr("opacity", 0)
+               .transition()
+               .delay((d, i) => i * 100)
+               .duration(200)
+               .attr("opacity", 1);
+
+        /*svg.selectAll("circle")
             .data(data)
             .enter()
             .append("circle")
@@ -287,7 +316,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .on("mouseout", function(event, d) {
                 d3.select(this).transition().duration(100).style("opacity", 0);
                 tooltip.transition().duration(500).style("opacity", 0);
-            }); 
+            }); */
     }
 
     // Add fixed tooltips for highest and lowest points
