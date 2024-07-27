@@ -10,40 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-var Tooltip = d3.select("body")  // Ensure this selects the correct container
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "tooltip")
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "2px")
-    .style("border-radius", "5px")
-    .style("padding", "5px");
-
-var mouseover = function(event, d) {
-    Tooltip
-        .style("opacity", 1);
-    d3.select(this)
-        .style("stroke", "black")
-        .style("opacity", 1);
-}
-
-var mousemove = function(event, d) {
-    Tooltip
-        .html("Date: " + d3.timeFormat("%Y-%m-%d")(d.Date) + "<br>Close: " + d.Close)
-        .style("left", (event.pageX + 15) + "px")  // Adjust the position
-        .style("top", (event.pageY - 28) + "px");
-}
-
-var mouseleave = function(event, d) {
-    Tooltip
-        .style("opacity", 0);
-    d3.select(this)
-        .style("stroke", "none")
-        .style("opacity", 0.8);
-}
-
-
 // Define margins and dimensions
 const margin = { top: 50, right: 50, bottom: 120, left: 120 },
       width = 800 - margin.left - margin.right,
@@ -382,7 +348,23 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .text(yAxisLabelRight);
 
     if (addHoverEffect) {
+
         svg.selectAll("circle")
+            .on("mouseover", (event, d) => {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html(`Close: ${yValueAccessorLeft(d)}`)
+                    .style("left", (event.pageX) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", () => {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
+
+        /*svg.selectAll("circle")
             .data(data)
             .enter()
             .append("circle")
@@ -391,9 +373,17 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             .attr("r", 4)
             .attr("fill", "yellow")
             .style("opacity", 0)
-            .on("mouseover", mouseover)  // Add tooltip event
-            .on("mousemove", mousemove)  // Add tooltip event
-            .on("mouseleave", mouseleave);  // Add tooltip event
+            .on("mouseover", function(event, d) {
+                d3.select(this).transition().duration(100).style("opacity", 1);
+                tooltip.transition().duration(200).style("opacity", .9);
+                tooltip.html(`Close: ${yValueAccessorLeft(d)}<br>Volume: ${yValueAccessorRight(d).toFixed(2)}M`)
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(event, d) {
+                d3.select(this).transition().duration(100).style("opacity", 0);
+                tooltip.transition().duration(500).style("opacity", 0);
+            });*/
     }
 
     const highest = d3.max(data, yValueAccessorLeft);
