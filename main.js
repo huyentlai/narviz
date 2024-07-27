@@ -348,23 +348,31 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .text(yAxisLabelRight);
 
     if (addHoverEffect) {
-
         svg.selectAll("circle")
-            .on("mouseover", (event, d) => {
-                tooltip.transition()
-                    .duration(200)
-                    .style("opacity", .9);
-                tooltip.html(`Close: ${yValueAccessorLeft(d)}`)
-                    .style("left", (event.pageX) + "px")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("cx", d => x(d.Date))
+            .attr("cy", d => yLeft(yValueAccessorLeft(d)))
+            .attr("r", 4)
+            .attr("fill", "yellow")
+            .style("opacity", 0)
+            .on("mouseover", function(event, d) {
+                d3.select(this).transition().duration(100).style("opacity", 1);
+                tooltip.transition().duration(200).style("opacity", .9);
+                tooltip.text(`Close: ${yValueAccessorLeft(d)} Volume: ${yValueAccessorRight(d).toFixed(2)}M`)  // Use text instead of html
+                    .style("left", (event.pageX + 5) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
-            .on("mouseout", () => {
-                tooltip.transition()
-                    .duration(500)
-                    .style("opacity", 0);
+            .on("mouseout", function(event, d) {
+                d3.select(this).transition().duration(100).style("opacity", 0);
+                tooltip.transition().duration(500).style("opacity", 0);
             });
+    }
 
-        /*svg.selectAll("circle")
+
+    /*if (addHoverEffect) {
+        svg.selectAll("circle")
             .data(data)
             .enter()
             .append("circle")
@@ -383,8 +391,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             .on("mouseout", function(event, d) {
                 d3.select(this).transition().duration(100).style("opacity", 0);
                 tooltip.transition().duration(500).style("opacity", 0);
-            });*/
-    }
+            });
+    }*/
 
     const highest = d3.max(data, yValueAccessorLeft);
     const lowest = d3.min(data, yValueAccessorLeft);
