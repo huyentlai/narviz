@@ -243,8 +243,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .call(d3.axisRight(yRight))
         .selectAll("path")
         .attr("stroke-dasharray", "2,2")  // Make the axis line dotted
-        .attr("stroke-width", 0.8)
-        .style("fill", "grey"); 
+        .attr("stroke-width", 0.8); 
     
     const lineLeft = d3.line()
         .x(d => x(d.Date))
