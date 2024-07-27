@@ -293,14 +293,14 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
     }
 
     // Add fixed tooltips for highest and lowest points
-    const highest = d3.max(data, yValueAccessor);
-    const lowest = d3.min(data, yValueAccessor);
-    const highestPoint = data.find(d => yValueAccessor(d) === highest);
-    const lowestPoint = data.find(d => yValueAccessor(d) === lowest);
+    //const highest = d3.max(data, yValueAccessor);
+    //const lowest = d3.min(data, yValueAccessor);
+    //const highestPoint = data.find(d => yValueAccessor(d) === highest);
+    //const lowestPoint = data.find(d => yValueAccessor(d) === lowest);
 
-    addTooltip(svg, x, y, highestPoint, yValueAccessor, "Highest", yField);
+    //addTooltip(svg, x, y, highestPoint, yValueAccessor, "Highest", yField);
         
-    addTooltip(svg, x, y, lowestPoint, yValueAccessor, "Lowest", yField);
+    //addTooltip(svg, x, y, lowestPoint, yValueAccessor, "Lowest", yField);
 }
 
 function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
