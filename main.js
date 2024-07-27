@@ -282,7 +282,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .on("mouseover", function(event, d) {
                 d3.select(this).transition().duration(100).style("opacity", 1);
                 tooltip.transition().duration(200).style("opacity", .9);
-                tooltip.html(`Close: ${yValueAccessor(d)}`)  // Show the closing price
+                tooltip.html(`Close:`)  
                     .style("left", (event.pageX + 5) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
