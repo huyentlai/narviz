@@ -195,7 +195,7 @@ function showScene1() {
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
-        "Volume (Millions)",
+        "Trading Volume (Millions)",
         true,
         "red",
         "grey",
@@ -229,7 +229,7 @@ function showScene2() {
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
-        "Volume (Millions)",
+        "Trading Volume (Millions)",
         true,
         "green",
         "grey",
@@ -263,7 +263,7 @@ function showScene3() {
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
-        "Volume (Millions)",
+        "Trading Volume (Millions)",
         true,
         "blue",
         "grey",
@@ -495,7 +495,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
     legend.append("text")
         .attr("x", 50)
         .attr("y", 5)
-        .text("Left Axis Line")
+        .text("Closing Price")
         .style("font-size", "12px")
         .attr("alignment-baseline", "middle");
     
@@ -512,7 +512,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
     legend.append("text")
         .attr("x", 50)
         .attr("y", 25)
-        .text("Right Axis Line")
+        .text("Trading Volume")
         .style("font-size", "12px")
         .attr("alignment-baseline", "middle");
 
