@@ -27,8 +27,8 @@ function showOverview() {
     d3.select("#visualization")
         .append("div")
         .attr("class", "description")
-        .style("padding-left", "40px")  // Add left padding
-        .style("padding-right", "40px") 
+        .style("padding-left", "60px")  // Add left padding
+        .style("padding-right", "60px") 
         .style("fill", "darkgrey")
         .style("font-size", "14px")  // Set the font size to a smaller value
         .html(`
@@ -147,7 +147,7 @@ function showOverview() {
             dx: 25
         },
         {
-            note: { label: "Steady rise to volatile peak", title: "Data Center Boom" },
+            note: { label: "Volatile peak", title: "Datacenter + AI Boom" },
             x: x(new Date("2021-10-20")),
             y: y(250),
             dy: -35,
@@ -176,8 +176,8 @@ function showScene1() {
     d3.select("#visualization")
         .append("div")
         .attr("class", "description")
-        .style("padding-left", "20px")  // Add left padding
-        .style("padding-right", "20px") 
+        .style("padding-left", "60px")  // Add left padding
+        .style("padding-right", "60px") 
         .style("fill", "grey")
         .style("font-size", "14px")  // Set the font size to a smaller value
         .html(`
@@ -210,12 +210,12 @@ function showScene2() {
     d3.select("#visualization")
         .append("div")
         .attr("class", "description")
-        .style("padding-left", "20px")  // Add left padding
-        .style("padding-right", "20px")
+        .style("padding-left", "60px")  // Add left padding
+        .style("padding-right", "60px")
         .style("fill", "grey")
         .style("font-size", "14px")  // Set the font size to a smaller value
         .html(`
-            <h2 style="font-size: 18px;">Data Center Boom: end of 2019 to early 2021</h2>
+            <h2 style="font-size: 18px;">The Datacenter Boom: end of 2019 to early 2021</h2>
             <p>After the dreadful drop in price in the previous year, starting in mid-2019, NVIDIA's stock began to rise again. This whole period of time saw big jumps, and sometimes almost vertical increase, largely thanks to its data center game well-played, sophisticated high-end technology that answered the demand of big markets such as China's, and AI prospects. </p>
             <p>The super-jump in late 2021 could also be explained with a post-Covid-19 report release - a special circumstance where during the epidemic, more people had to stay work from home and needed better technology form their own connection. </p>
         `);
@@ -224,7 +224,7 @@ function showScene2() {
 
     createChart(
         filteredData,
-        "NVIDIA Stock Closing Prices and Trading Volume Period 2",
+        "NVIDIA Stock Closing Prices and Trading Volume: end of 2019 to early 2021",
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
@@ -248,17 +248,18 @@ function showScene3() {
         .style("fill", "grey")
         .style("font-size", "14px")  // Set the font size to a smaller value
         .html(`
-            <h2 style="font-size: 18px;">NVIDIA Stock Performance Overview</h2>
-            <p>NVIDIA's stock performance from early 2018 to mid-2022 encapsulates the volatility and dynamism inherent in the technology sector. This period can be divided into three significant phases marked by distinct trends and driving factors. Initially, from early 2018 to mid-2019, NVIDIA faced a sharp decline in stock price largely due to external market forces. The collapse of the cryptocurrency market led to an oversupply of GPUs, which, coupled with the impact of the US-China trade war, significantly hindered NVIDIA’s growth. The inventory overhang and increased costs due to tariffs added to the pressure, causing the stock to plunge​ (Nasdaq)​​ (InvestorPlace)​.</p>
-            <p>The subsequent period from mid-2019 to early 2021 marked a significant recovery for NVIDIA, driven by the burgeoning data center business and the rise of AI and machine learning applications. During this phase, NVIDIA capitalized on the growing demand for its GPUs, which became essential in various high-performance computing applications. The COVID-19 pandemic further accelerated this demand as more businesses and individuals turned to digital solutions, boosting NVIDIA’s gaming and data center segments. This robust growth led to a steady increase in stock price, showcasing the company's resilience and strategic positioning in the tech industry​ (InvestorPlace)​​ (Nasdaq)​.</p>
-            <p>The final phase from early 2021 to mid-2022 saw NVIDIA’s stock reaching its peak before experiencing increased volatility and a general decline. This period was marked by significant market corrections within the tech sector, coupled with NVIDIA facing supply chain issues and regulatory scrutiny over its proposed acquisition of ARM. Despite these challenges, the company's long-term growth prospects remained strong, driven by the continued expansion in AI and data center markets. However, the immediate market reactions to these challenges led to a pullback in stock price, reflecting the broader uncertainties in the tech industry​ (Nasdaq)​​ (InvestorPlace)​.</p>
+            <h2 style="font-size: 18px;">The Pullback: early to mid 2022 </h2>
+            <p>After reaching the highest point in their stock price, NVIDIA saw an almost immediate drop, but only to the same point as before the volatile peak. This could be due to several reasons which could explain this trend that is observed in our chart. </p>
+            <p>Market correction came in first, this is general market adjusting to any tech hype, in this particular case, the AI hype. Some of this discussion could be found in the Gartner Hype Cycle website. https://www.gartner.com/en/research/methodologies/gartner-hype-cycle</p>
+            <p>Supply chain problems came in second. The aftermath of Covid-19 manufacturing capacity and logistical disruptions have caused a global chip shortage, and NVIDIA also failed victim to this issue.</p>
+            <p>Despite these issues, NVIDIA's stock closing price remained strong and stable at this period of time with good-looking growth prospects.
         `);
 
     const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate2));
 
     createChart(
         filteredData,
-        "NVIDIA Stock Closing Prices and Trading Volume Period 3",
+        "NVIDIA Stock Closing Prices and Trading Volume: Early to mid-2022",
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
@@ -437,8 +438,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             {
                 type: d3.annotationXYThreshold,
                 note: {
-                    title: `Improvement in data center`,
-                    label: `Steady rise`,
+                    title: `Lowest to highest point: A whooping jump of 680% in price`,
+                    label: `NVIDIA reports looked good`,
                     align: "middle",
                     wrap: width / 3
                 },
@@ -448,7 +449,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 dy: 0
             },
             {
-                note: { label: "Soar in stock price", title: "AI boom" },
+                note: { label: "Vertical jump", title: "The (AI) hype was real" },
                 x: x(new Date("2021-10-20")),
                 y: yLeft(250),
                 dy: -35,
@@ -476,8 +477,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             {
                 type: d3.annotationXYThreshold,
                 note: {
-                    title: `Dip and stable`,
-                    label: `Dip and blah blah`,
+                    title: `Dip but not to the bottom - growth is still good`,
+                    label: `Market Correction`,
                     align: "middle",
                     wrap: width / 3
                 },
