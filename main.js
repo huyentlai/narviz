@@ -150,7 +150,7 @@ function showScene1() {
         "Volume (Millions)",
         true,
         "red",
-        "grey",
+        "lightgrey",
         true,
         false
     );
@@ -171,7 +171,7 @@ function showScene2() {
         "Volume (Millions)",
         true,
         "green",
-        "grey",
+        "lightgrey",
         false,
         true
     );
