@@ -217,7 +217,9 @@ function showScene3() {
         "Volume (Millions)",
         true,
         "blue",
-        "grey"
+        "grey",
+        false,
+        false
     );
 }
 
