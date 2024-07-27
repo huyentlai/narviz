@@ -522,7 +522,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("x", 50)
         .attr("y", 5)
         .text("Closing Price")
-        .style("font-size", "12px")
+        .style("fill", "grey")
+       .style("font-size", "14px")
         .attr("alignment-baseline", "middle");
     
     // Right axis line legend
@@ -539,7 +540,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("x", 50)
         .attr("y", 25)
         .text("Trading Volume")
-        .style("font-size", "12px")
+        .style("fill", "grey")
+        .style("font-size", "14px")
         .attr("alignment-baseline", "middle");
 
     
