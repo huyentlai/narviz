@@ -119,7 +119,19 @@ function showOverview() {
         }
     ];
 
-    const makeAnnotations = d3.annotation().annotations(annotations);
+    const makeAnnotations = d3.annotation()
+        .annotations(annotations)
+        .editMode(false)
+        .notePadding(15)
+        .type(d3.annotationCalloutElbow)
+        .accessors({
+            x: d => x(new Date(d.Date)),
+            y: d => y(d.Close)
+        })
+        .annotations(annotations.map(annotation => {
+            annotation.color = "orange";  // Set annotation color to orange
+            return annotation;
+        }));
     svg.append("g").call(makeAnnotations);
 }
 
@@ -211,7 +223,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
 
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", -margin.left + 40)
+        .attr("y", -margin.left + 70)
         .attr("x", -height / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
@@ -273,7 +285,19 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 dy: 0
             }
         ];
-        const makeAnnotations = d3.annotation().annotations(annotations);
+        const makeAnnotations = d3.annotation()
+            .annotations(annotations)
+            .editMode(false)
+            .notePadding(15)
+            .type(d3.annotationCalloutElbow)
+            .accessors({
+                x: d => x(new Date(d.Date)),
+                y: d => y(d.Close)
+            })
+            .annotations(annotations.map(annotation => {
+                annotation.color = "orange";  // Set annotation color to orange
+                return annotation;
+            }));
         svg.append("g").call(makeAnnotations);
     }
 
