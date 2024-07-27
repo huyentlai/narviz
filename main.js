@@ -481,7 +481,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
     
     // Add legend
     const legend = svg.append("g")
-        .attr("transform", `translate(${width - 150}, ${height + margin.bottom - 20})`);
+        .attr("transform", `translate(${width - 150}, ${height + margin.top})`);  // Adjust the Y position closer to the chart
     
     // Left axis line legend
     legend.append("line")
@@ -495,7 +495,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
     legend.append("text")
         .attr("x", 50)
         .attr("y", 5)
-        .text("Closing Price")
+        .text("Left Axis Line")
         .style("font-size", "12px")
         .attr("alignment-baseline", "middle");
     
@@ -512,9 +512,10 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
     legend.append("text")
         .attr("x", 50)
         .attr("y", 25)
-        .text("Trading Volume")
+        .text("Right Axis Line")
         .style("font-size", "12px")
         .attr("alignment-baseline", "middle");
+
     
 
 }
