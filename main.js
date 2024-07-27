@@ -20,6 +20,9 @@ const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("
 
 const cutOffDate = "2020-02-01";
 
+const cutOffDate1 = "2019-12-01";
+const cutOffDate2 = "2022-12-10";
+
 function showOverview() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("NVIDIA's stock performance from early 2018 to mid-2022 encapsulates the volatility and dynamism inherent in the technology sector. This period can be divided into three significant phases marked by distinct trends and driving factors. Initially, from early 2018 to mid-2019, NVIDIA faced a sharp decline in stock price largely due to external market forces. The collapse of the cryptocurrency market led to an oversupply of GPUs, which, coupled with the impact of the US-China trade war, significantly hindered NVIDIA’s growth. The inventory overhang and increased costs due to tariffs added to the pressure, causing the stock to plunge​ (Nasdaq)​​ (InvestorPlace)​. The subsequent period from mid-2019 to early 2021 marked a significant recovery for NVIDIA, driven by the burgeoning data center business and the rise of AI and machine learning applications. During this phase, NVIDIA capitalized on the growing demand for its GPUs, which became essential in various high-performance computing applications. The COVID-19 pandemic further accelerated this demand as more businesses and individuals turned to digital solutions, boosting NVIDIA’s gaming and data center segments. This robust growth led to a steady increase in stock price, showcasing the company's resilience and strategic positioning in the tech industry​ (InvestorPlace)​​ (Nasdaq)​. The final phase from early 2021 to mid-2022 saw NVIDIA’s stock reaching its peak before experiencing increased volatility and a general decline. This period was marked by significant market corrections within the tech sector, coupled with NVIDIA facing supply chain issues and regulatory scrutiny over its proposed acquisition of ARM. Despite these challenges, the company's long-term growth prospects remained strong, driven by the continued expansion in AI and data center markets. However, the immediate market reactions to these challenges led to a pullback in stock price, reflecting the broader uncertainties in the tech industry​ (Nasdaq)​​ (InvestorPlace)​.");
@@ -42,7 +45,7 @@ function showOverview() {
 
     // Section 1: Jan 2017 - Mar 2020
     svg.append("path")
-        .datum(window.data.filter(d => d.Date < new Date(cutOffDate)))
+        .datum(window.data.filter(d => d.Date < new Date(cutOffDate1)))
         .attr("fill", "none")
         .attr("stroke", "red")
         .attr("stroke-width", 2)
@@ -65,7 +68,7 @@ function showOverview() {
 
     // Section 2: Mar 2020 - Jun 2022
     svg.append("path")
-        .datum(window.data.filter(d => d.Date >= new Date(cutOffDate) && d.Date <= new Date("2022-06-30")))
+        .datum(window.data.filter(d => d.Date >= new Date(cutOffDate1) && d.Date < new Date(cutOffDate2)))
         .attr("fill", "none")
         .attr("stroke", "green")
         .attr("stroke-width", 2)
@@ -86,6 +89,29 @@ function showOverview() {
             showScene2();
         });
 
+    // Section 3: cutOffDate2 - end
+    svg.append("path")
+        .datum(window.data.filter(d => d.Date >= new Date(cutOffDate2)))
+        .attr("fill", "none")
+        .attr("stroke", "blue")
+        .attr("stroke-width", 2)
+        .attr("d", line)
+        .style("cursor", "pointer")  // Indicate clickable area
+        .on("mouseover", function(event, d) {
+            d3.select(this).attr("stroke-width", 4);
+            tooltip.transition().duration(200).style("opacity", .9);
+            tooltip.html("Click to see detailed view of Recent Period")
+                .style("left", (event.pageX + 5) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            d3.select(this).attr("stroke-width", 2);
+            tooltip.transition().duration(500).style("opacity", 0);
+        })
+        .on("click", function() {
+            showScene3();  // Navigate to Scene 3
+        });   
+    
     svg.append("text")
         .attr("x", width / 2)
         .attr("y", -20)
@@ -139,11 +165,11 @@ function showScene1() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("In 2018, NVIDIA experienced a significant downturn primarily due to the collapse of the cryptocurrency market. The company had heavily invested in producing GPUs for crypto mining, and the sudden drop in cryptocurrency prices led to a decrease in demand for these products. Additionally, NVIDIA faced an inventory overhang problem as GPUs piled up unsold. Another contributing factor was the escalating trade war between the US and China, which caused global semiconductor demand to drop and increased costs due to tariffs​ (Nasdaq)​​ (InvestorPlace)​.");
 
-    const filteredData = window.data.filter(d => d.Date < new Date(cutOffDate));
+    const filteredData = window.data.filter(d => d.Date < new Date(cutOffDate1));
 
     createChart(
         filteredData,
-        "NVIDIA Stock Closing Prices and Trading Volume (Jan 2017 - Mar 2020)",
+        "NVIDIA Stock Closing Prices and Trading Volume Period 1)",
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
@@ -160,11 +186,11 @@ function showScene2() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("NVIDIA's stock began to recover in mid-2019, driven by robust growth in its data center business. The company's GPUs became essential for AI and machine learning applications, leading to higher sales and improved profitability. The COVID-19 pandemic further accelerated the adoption of digital technologies, boosting demand for NVIDIA's products. The company also benefitted from the strong performance of its gaming segment, driven by the launch of new GPUs and the overall increase in gaming activity during the pandemic​ (InvestorPlace)​​ (Nasdaq)​.");
 
-    const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate));
+    const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate1) && d.Date < new Date(cutOffDate2)))
 
     createChart(
         filteredData,
-        "NVIDIA Stock Closing Prices and Trading Volume (Mar 2020 - Jun 2022)",
+        "NVIDIA Stock Closing Prices and Trading Volume Period 2",
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
@@ -174,6 +200,24 @@ function showScene2() {
         "lightgrey",
         false,
         true
+    );
+}
+function showScene3() {
+    d3.select("#visualization").html("");  // Clear previous content
+    d3.select("#visualization").append("div").attr("class", "description").text("Scene 3 covers third period");
+
+    const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate2));
+
+    createChart(
+        filteredData,
+        "NVIDIA Stock Closing Prices and Trading Volume Period 3",
+        d => d.Close,
+        "Closing Price (USD)",
+        d => d.Volume / 1e6,
+        "Volume (Millions)",
+        true,
+        "blue",
+        "grey"
     );
 }
 
