@@ -176,7 +176,7 @@ function showScene1() {
         "Volume (Millions)",
         true,
         "red",
-        "lightgrey",
+        "grey",
         true,
         false
     );
@@ -197,7 +197,7 @@ function showScene2() {
         "Volume (Millions)",
         true,
         "green",
-        "lightgrey",
+        "grey",
         false,
         true
     );
@@ -237,8 +237,14 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
 
     svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
     svg.append("g").call(d3.axisLeft(yLeft));
-    svg.append("g").attr("transform", "translate(" + width + ",0)").call(d3.axisRight(yRight));
-
+    //svg.append("g").attr("transform", "translate(" + width + ",0)").call(d3.axisRight(yRight));
+    svg.append("g")
+        .attr("transform", "translate(" + width + ",0)")
+        .call(d3.axisRight(yRight))
+        .selectAll("path")
+        .attr("stroke-dasharray", "2,2")  // Make the axis line dotted
+        .attr("stroke-width", 0.8); 
+    
     const lineLeft = d3.line()
         .x(d => x(d.Date))
         .y(d => yLeft(yValueAccessorLeft(d)));
@@ -252,8 +258,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("fill", "none")
         .attr("stroke", chartColorRight)
         .attr("stroke-width", 2)
-        .attr("stroke-width", 1)  // Make the line thinner
-        .attr("stroke-dasharray", "5,5")  // Make the line dashed
+        .attr("stroke-width", 0.8)  // Make the line thinner
+        .attr("stroke-dasharray", "2,2")  // Make the line dashed
         .attr("d", lineRight);
 
     svg.append("path")
@@ -375,7 +381,19 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 dx: -45
             }
         ];
-        const makeAnnotations = d3.annotation().annotations(annotations);
+        const makeAnnotations = d3.annotation()
+            .annotations(annotations)
+            .editMode(false)
+            .notePadding(15)
+            .type(d3.annotationCalloutElbow)
+            .accessors({
+                x: d => x(new Date(d.Date)),
+                y: d => y(d.Close)
+            })
+            .annotations(annotations.map(annotation => {
+                annotation.color = "orange";
+                return annotation;
+            }));
         svg.append("g").call(makeAnnotations);
     }
 }
@@ -385,7 +403,7 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("cx", x(point.Date))
         .attr("cy", y(yValueAccessor(point)))
         .attr("r", 5)
-        .attr("fill", "yellow")
+        .attr("fill", "orange")
         .on("mouseover", function(event, d) {
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(`${label}: ${yValueAccessor(point)} ${yField === "Volume" ? "M" : ""}`)
@@ -401,6 +419,6 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("y", y(yValueAccessor(point)) + 5)
         .attr("text-anchor", "start")
         .style("font-size", "12px")
-        .style("fill", "yellow")
+        .style("fill", "orange")
         .text(`${label}: ${yValueAccessor(point).toFixed(2)}`);
 }
