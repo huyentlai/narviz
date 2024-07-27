@@ -271,31 +271,31 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
 
     if (addHoverEffect) {
         svg.selectAll("dot")
-               .data(data)
-               .enter()
-               .append("circle")
-               .attr("cx", d => x(d.Date))
-               .attr("cy", d => y(yValueAccessor(d)))
-               .attr("r", 5)
-               .attr("fill", "orange")
-               .on("mouseover", function(event, d) => {
-                    tooltip.transition()
-                           .duration(200)
-                           .style("opacity", .9);
-                    tooltip.html(`Close: ${yValueAccessor(d)}`)
-                           .style("left", (event.pageX + 5) + "px")
-                           .style("top", (event.pageY - 28) + "px");
-               })
-               .on("mouseout", () => {
-                    tooltip.transition()
-                           .duration(500)
-                           .style("opacity", 0);
-               })
-               .attr("opacity", 0)
-               .transition()
-               .delay((d, i) => i * 100)
-               .duration(200)
-               .attr("opacity", 1);
+           .data(data)
+           .enter()
+           .append("circle")
+           .attr("cx", d => x(d.Date))
+           .attr("cy", d => y(yValueAccessor(d)))
+           .attr("r", 5)
+           .attr("fill", "orange")
+           .on("mouseover", function(event, d) {
+                tooltip.transition()
+                       .duration(200)
+                       .style("opacity", .9);
+                tooltip.html(`Close: ${yValueAccessor(d)}`)
+                       .style("left", (event.pageX + 5) + "px")
+                       .style("top", (event.pageY - 28) + "px");
+           })
+           .on("mouseout", () => {
+                tooltip.transition()
+                       .duration(500)
+                       .style("opacity", 0);
+           })
+           .attr("opacity", 0)
+           .transition()
+           .delay((d, i) => i * 100)
+           .duration(200)
+           .attr("opacity", 1);
 
         /*svg.selectAll("circle")
             .data(data)
