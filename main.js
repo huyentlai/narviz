@@ -10,12 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-//add buttons dynamically
-d3.select("body").append("button").attr("class", "button-orange").text("Overview").on("click", showOverview);
-d3.select("body").append("button").attr("class", "button-red").text("Scene 1").on("click", showScene1);
-d3.select("body").append("button").attr("class", "button-green").text("Scene 2").on("click", showScene2);
-d3.select("body").append("button").attr("class", "button-blue").text("Scene 3").on("click", showScene3);
-
 // Define margins and dimensions
 const margin = { top: 50, right: 50, bottom: 120, left: 120 },
       width = 800 - margin.left - margin.right,
@@ -274,7 +268,7 @@ function showScene3() {
         "blue",
         "grey",
         false,
-        false.
+        false,
         true
     );
 }
