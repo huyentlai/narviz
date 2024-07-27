@@ -350,10 +350,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("fill", "none")
         .attr("stroke", chartColorLeft)
         .attr("stroke-width", 2)
-        .attr("d", lineLeft)
-        .on("mouseover", mouseover)  // Add tooltip event
-        .on("mousemove", mousemove)  // Add tooltip event
-        .on("mouseleave", mouseleave);  // Add tooltip event
+        .attr("d", lineLeft);
 
 
 
@@ -384,7 +381,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .style("fill", "grey")
         .text(yAxisLabelRight);
 
-    /*if (addHoverEffect) {
+    if (addHoverEffect) {
         svg.selectAll("circle")
             .data(data)
             .enter()
@@ -394,18 +391,10 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             .attr("r", 4)
             .attr("fill", "yellow")
             .style("opacity", 0)
-            .on("mouseover", function(event, d) {
-                d3.select(this).transition().duration(100).style("opacity", 1);
-                tooltip.transition().duration(200).style("opacity", .9);
-                tooltip.html(`Close: ${yValueAccessorLeft(d)}<br>Volume: ${yValueAccessorRight(d).toFixed(2)}M`)
-                    .style("left", (event.pageX + 5) + "px")
-                    .style("top", (event.pageY - 28) + "px");
-            })
-            .on("mouseout", function(event, d) {
-                d3.select(this).transition().duration(100).style("opacity", 0);
-                tooltip.transition().duration(500).style("opacity", 0);
-            });
-    }*/
+            .on("mouseover", mouseover)  // Add tooltip event
+            .on("mousemove", mousemove)  // Add tooltip event
+            .on("mouseleave", mouseleave);  // Add tooltip event
+    }
 
     const highest = d3.max(data, yValueAccessorLeft);
     const lowest = d3.min(data, yValueAccessorLeft);
