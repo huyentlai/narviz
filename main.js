@@ -252,6 +252,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("fill", "none")
         .attr("stroke", chartColorRight)
         .attr("stroke-width", 2)
+        .attr("stroke-width", 1)  // Make the line thinner
+        .attr("stroke-dasharray", "5,5")  // Make the line dashed
         .attr("d", lineRight);
 
     svg.append("path")
@@ -263,9 +265,10 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
 
     svg.append("text")
         .attr("x", width / 2)
-        .attr("y", -40)
+        .attr("y", -100)
         .attr("text-anchor", "middle")
         .style("font-size", "24px")
+        .style("fill", "lightgray")
         .text(title);
 
     svg.append("text")
@@ -274,6 +277,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("x", -height / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
+        .style("fill", "lightgray")
         .text(yAxisLabelLeft);
 
     svg.append("text")
@@ -282,6 +286,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("x", -height / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
+        .style("fill", "lightgray")
         .text(yAxisLabelRight);
 
     if (addHoverEffect) {
@@ -380,7 +385,7 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("cx", x(point.Date))
         .attr("cy", y(yValueAccessor(point)))
         .attr("r", 5)
-        .attr("fill", "black")
+        .attr("fill", "yellow")
         .on("mouseover", function(event, d) {
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(`${label}: ${yValueAccessor(point)} ${yField === "Volume" ? "M" : ""}`)
@@ -396,6 +401,6 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         .attr("y", y(yValueAccessor(point)) + 5)
         .attr("text-anchor", "start")
         .style("font-size", "12px")
-        .style("fill", "black")
+        .style("fill", "yellow")
         .text(`${label}: ${yValueAccessor(point).toFixed(2)}`);
 }
