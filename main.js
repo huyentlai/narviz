@@ -274,7 +274,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("y", -20)
         .attr("text-anchor", "middle")
         .style("font-size", "24px")
-        .style("fill", "lightgray")
+        .style("fill", "grey")
         .text(title);
 
     svg.append("text")
@@ -283,7 +283,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("x", -height / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
-        .style("fill", "lightgray")
+        .style("fill", "grey")
         .text(yAxisLabelLeft);
 
     svg.append("text")
