@@ -231,7 +231,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
 
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", width + margin.right - 30)
+        .attr("y", width + margin.right - 80)
         .attr("x", -height / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
