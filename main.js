@@ -311,15 +311,6 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("d", lineLeft);
 
     svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", -20)
-        .attr("text-anchor", "middle")
-        .style("font-size", "24px")
-        .style("fill", "grey")
-        .style("padding-bottom", "20px")
-        .text(title);
-
-    svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", -margin.left + 40)
         .attr("x", -height / 2)
@@ -438,6 +429,20 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             }));
         svg.append("g").call(makeAnnotations);
     }
+    
+    const titleGroup = svg.append("g")
+    .attr("transform", "translate(0, 500)");  // Add a translation to move the title down
+
+    titleGroup.append("text")
+    .attr("x", width / 2)
+    .attr("y", -20)
+    .attr("text-anchor", "middle")
+    .style("font-size", "24px")
+    .style("fill", "grey")
+    .style("padding-bottom", "20px")
+    .text(title);
+
+
 }
 
 function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
