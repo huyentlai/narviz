@@ -243,7 +243,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .call(d3.axisRight(yRight))
         .selectAll("path")
         .attr("stroke-dasharray", "2,2")  // Make the axis line dotted
-        .attr("stroke-width", 0.8); 
+        .attr("stroke-width", 0.8)
+        .style("fill", "grey"); 
     
     const lineLeft = d3.line()
         .x(d => x(d.Date))
@@ -271,7 +272,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
 
     svg.append("text")
         .attr("x", width / 2)
-        .attr("y", -100)
+        .attr("y", -20)
         .attr("text-anchor", "middle")
         .style("font-size", "24px")
         .style("fill", "lightgray")
@@ -292,7 +293,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("x", -height / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
-        .style("fill", "lightgray")
+        .style("fill", "grey")
         .text(yAxisLabelRight);
 
     if (addHoverEffect) {
