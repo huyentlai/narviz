@@ -12,23 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Define margins and dimensions
 const margin = { top: 50, right: 50, bottom: 120, left: 120 },
-    width = 800 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+      width = 800 - margin.left - margin.right,
+      height = 600 - margin.top - margin.bottom;
 
 // Tooltip div
 const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
-const cutOffDate = "2020-02-01"
+const cutOffDate = "2020-02-01";
 
 function showOverview() {
     d3.select("#visualization").html("");  // Clear previous content
     d3.select("#visualization").append("div").attr("class", "description").text("The dataset gives informative context and details to understand these trends");
-
-    // Chart 1: Closing Prices
-    // createChart(window.data, "NVIDIA Stock Closing Prices (Jan 2017 - Jun 2022)", d => d.Close, "Closing Price (USD)", "Close", false);
-
-    // Chart 2: Trading Volume
-    // createChart(window.data, "NVIDIA Stock Trading Volume (Jan 2017 - Jun 2022)", d => d.Volume / 1e6, "Volume (Millions)", "Volume", false);
 
     const svg = d3.select("#visualization").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -42,11 +36,7 @@ function showOverview() {
     svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%Y")));
     svg.append("g").call(d3.axisLeft(y));
 
-    const line1 = d3.line()
-        .x(d => x(d.Date))
-        .y(d => y(d.Close));
-
-    const line2 = d3.line()
+    const line = d3.line()
         .x(d => x(d.Date))
         .y(d => y(d.Close));
 
@@ -56,8 +46,8 @@ function showOverview() {
         .attr("fill", "none")
         .attr("stroke", "red")
         .attr("stroke-width", 2)
-        .attr("d", line1)
-        .style("cursor", "pointer")  // Indicate clickable area
+        .attr("d", line)
+        .style("cursor", "pointer")
         .on("mouseover", function(event, d) {
             d3.select(this).attr("stroke-width", 4);
             tooltip.transition().duration(200).style("opacity", .9);
@@ -79,21 +69,21 @@ function showOverview() {
         .attr("fill", "none")
         .attr("stroke", "green")
         .attr("stroke-width", 2)
-        .attr("d", line2)
-        .style("cursor", "pointer")  // Indicate clickable area
+        .attr("d", line)
+        .style("cursor", "pointer")
         .on("mouseover", function(event, d) {
             d3.select(this).attr("stroke-width", 4);
             tooltip.transition().duration(200).style("opacity", .9);
-            tooltip.html("Click to see detailed of AI boom")
+            tooltip.html("Click to see detailed view of AI boom")
                 .style("left", (event.pageX + 5) + "px")
                 .style("top", (event.pageY - 28) + "px");
         })
         .on("mouseout", function(d) {
             d3.select(this).attr("stroke-width", 2);
             tooltip.transition().duration(500).style("opacity", 0);
-        })        
+        })
         .on("click", function() {
-            showScene2();  // Navigate to Scene 2
+            showScene2();
         });
 
     svg.append("text")
@@ -112,48 +102,25 @@ function showOverview() {
         .text("Closing Price (USD)");
 
     // Annotations
-    /*const annotations = [
+    const annotations = [
         {
-            type: d3.annotationCallout,
-            // note: { title: "Crypto collapse and datahouse crisis", label: `High: ${financialCrisisPeak.High}` },
-            note: { title: "Crypto collapse and datahouse crisis", label: "Annotation1" },
-            x: x(new Date("2020-06-01")),
-            y: y(window.data.find(d => d.Date.getTime() === new Date("2020-06-01").getTime()).Close),
-            dy: -30,
-            dx: 30
+            note: { label: "Plateau in stock price", title: "Crypto crash and datahouse crisis" },
+            x: x(new Date("2019-01-01")),
+            y: y(50),
+            dy: -40,
+            dx: 25
         },
         {
-            note: { label: "Annotation2" },
-            x: x(new Date("2021-09-01")),
-            y: y(window.data.find(d => d.Date.getTime() === new Date("2021-09-01").getTime()).Close),
-            dy: -30,
-            dx: 30
+            note: { label: "Soar in stock price", title: "AI boom" },
+            x: x(new Date("2021-10-01")),
+            y: y(260),
+            dy: -35,
+            dx: -45
         }
     ];
 
     const makeAnnotations = d3.annotation().annotations(annotations);
-    svg.append("g").call(makeAnnotations);*/
-
-    const annotations = [
-            {
-                note: { label: "Plateau in stock price", title: "Cryto crash and datahouse crisis" },
-                x: x(new Date("2019-01-01")),
-                y: y(50),
-                dy: -40,
-                dx: 25
-            },
-            {
-                note: { label: " Soar in stock price", title: "AI boom" },
-                x: x(new Date("2021-10-01")),
-                y: y(260),
-                dy: -35,
-                dx: -45
-            }
-        ];
-
-    const makeAnnotations = d3.annotation().annotations(annotations);
     svg.append("g").call(makeAnnotations);
-
 }
 
 function showScene1() {
@@ -162,7 +129,6 @@ function showScene1() {
 
     const filteredData = window.data.filter(d => d.Date < new Date(cutOffDate));
 
-    // Chart 1: Closing Prices
     createChart(
         filteredData,
         "NVIDIA Stock Closing Prices and Trading Volume (Jan 2017 - Mar 2020)",
@@ -174,19 +140,19 @@ function showScene1() {
         "red",
         "grey",
         true,
-        false);
+        false
+    );
 }
 
 function showScene2() {
     d3.select("#visualization").html("");  // Clear previous content
-    d3.select("#visualization").append("div").attr("class", "description").text("Scene 2 covers first period");
+    d3.select("#visualization").append("div").attr("class", "description").text("Scene 2 covers second period");
 
     const filteredData = window.data.filter(d => d.Date >= new Date(cutOffDate));
 
-    // Chart 1: Closing Prices
     createChart(
         filteredData,
-        "NVIDIA Stock Closing Prices and Trading Volume (Mar 2020 - Jun 2021)",
+        "NVIDIA Stock Closing Prices and Trading Volume (Mar 2020 - Jun 2022)",
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
@@ -195,8 +161,8 @@ function showScene2() {
         "green",
         "grey",
         false,
-        true);
-}
+        true
+    );
 }
 
 function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAccessorRight, yAxisLabelRight, addHoverEffect, chartColorLeft, chartColorRight, isScene1, isScene2) {
@@ -221,52 +187,6 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
     const lineRight = d3.line()
         .x(d => x(d.Date))
         .y(d => yRight(yValueAccessorRight(d)));
-    
-    if (isScene1) {
-        const annotations = [
-            {
-                type: d3.annotationXYThreshold,
-                note: {
-                    title: `The market fell 40% over one year and two months.`,
-                    label: `Plateau in closing price`,
-                    align: "left",  // to align the text in the middle
-                    wrap: width / 3  // to control the width of the text box
-                },
-                x: x(new Date("2018-12-01")),// x position is in the middle of the peak and bottom dates
-                y: y(60),  // y position is in the middle of the peak and bottom prices
-                dx: 0,  // offset in x direction
-                dy: 0   // offset in y direction
-            }
-        ]; 
-        const makeAnnotations = d3.annotation().annotations(annotations);
-        svg.append("g").call(makeAnnotations);
-    }
-    if (isScene2) {
-        const annotations = [
-            {
-                type: d3.annotationXYThreshold,
-                note: {
-                    title: `Improvement in data center`,
-                    label: `Steady rise`,
-                    align: "middle",  // to align the text in the middle
-                    wrap: width / 3  // to control the width of the text box
-                },
-                x: x(new Date("2020-08-01")),// x position is in the middle of the peak and bottom dates
-                y: y(190),  // y position is in the middle of the peak and bottom prices
-                dx: 0,  // offset in x direction
-                dy: 0   // offset in y direction
-            },
-            {
-                note: { label: "Soar in stock price", title: "AI boom" },
-                x: x(new Date("2021-11-01")),
-                y: y(260),
-                dy: -35,
-                dx: -45
-            }
-        ]; 
-        const makeAnnotations = d3.annotation().annotations(annotations);
-        svg.append("g").call(makeAnnotations);
-    }
 
     svg.append("path")
         .datum(data)
@@ -337,6 +257,54 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
     addTooltip(svg, x, yLeft, highestPoint, yValueAccessorLeft, "Highest", yAxisLabelLeft);
     addTooltip(svg, x, yLeft, lowestPoint, yValueAccessorLeft, "Lowest", yAxisLabelLeft);
 
+    if (isScene1) {
+        const annotations = [
+            {
+                type: d3.annotationXYThreshold,
+                note: {
+                    title: `The market fell 40% over one year and two months.`,
+                    label: `Plateau in closing price`,
+                    align: "left",
+                    wrap: width / 3
+                },
+                x: x(new Date("2018-12-01")),
+                y: yLeft(60),
+                dx: 0,
+                dy: 0
+            }
+        ];
+        const makeAnnotations = d3.annotation().annotations(annotations);
+        svg.append("g").call(makeAnnotations);
+    }
+
+    if (isScene2) {
+        const annotations = [
+            {
+                type: d3.annotationXYThreshold,
+                note: {
+                    title: `Improvement in data center`,
+                    label: `Steady rise`,
+                    align: "middle",
+                    wrap: width / 3
+                },
+                x: x(new Date("2020-08-01")),
+                y: yLeft(190),
+                dx: 0,
+                dy: 0
+            },
+            {
+                note: { label: "Soar in stock price", title: "AI boom" },
+                x: x(new Date("2021-11-01")),
+                y: yLeft(260),
+                dy: -35,
+                dx: -45
+            }
+        ];
+        const makeAnnotations = d3.annotation().annotations(annotations);
+        svg.append("g").call(makeAnnotations);
+    }
+}
+
 function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
     svg.append("circle")
         .attr("cx", x(point.Date))
@@ -354,9 +322,9 @@ function addTooltip(svg, x, y, point, yValueAccessor, label, yField) {
         });
 
     svg.append("text")
-        .attr("x", x(point.Date) + 10)  // Position to the right
-        .attr("y", y(yValueAccessor(point)) + 5)  // Align vertically with the point
-        .attr("text-anchor", "start")  // Align text to the start
+        .attr("x", x(point.Date) + 10)
+        .attr("y", y(yValueAccessor(point)) + 5)
+        .attr("text-anchor", "start")
         .style("font-size", "12px")
         .style("fill", "black")
         .text(`${label}: ${yValueAccessor(point).toFixed(2)}`);
