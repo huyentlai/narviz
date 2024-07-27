@@ -278,7 +278,7 @@ function createChart(data, title, yValueAccessor, yAxisLabel, yField, addHoverEf
             .attr("cy", d => y(yValueAccessor(d)))
             .attr("r", 5)
             .attr("fill", "orange")
-            //.style("opacity", 0)
+            .style("opacity", 0)
             .on("mouseover", function(event, d) {
                 tooltip.transition()
                        .duration(200)
