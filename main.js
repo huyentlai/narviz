@@ -154,8 +154,8 @@ function showOverview() {
         },
         {
             note: { label: "Soar in stock price", title: "AI boom" },
-            x: x(new Date("2021-10-01")),
-            y: y(260),
+            x: x(new Date("2021-10-20")),
+            y: y(250),
             dy: -35,
             dx: -45
         }
@@ -431,7 +431,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             },
             {
                 note: { label: "Soar in stock price", title: "AI boom" },
-                x: x(new Date("2021-11-01")),
+                x: x(new Date("2021-10-20")),
                 y: yLeft(250),
                 dy: -35,
                 dx: -45
@@ -463,7 +463,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                     align: "middle",
                     wrap: width / 3
                 },
-                x: x(new Date("2022-03-01")),
+                x: x(new Date("2022-02-15")),
                 y: yLeft(180),
                 dx: 0,
                 dy: 0
