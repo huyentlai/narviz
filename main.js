@@ -438,7 +438,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             {
                 type: d3.annotationXYThreshold,
                 note: {
-                    title: `General downward trend`,
+                    title: `Crypto collapse causing cascading consequences`,
                     label: `Highest to Lowest point: NVIDIA's stock price fell 56% over about 3 months.`,
                     align: "left",
                     wrap: width / 3
@@ -449,11 +449,11 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 dy: 0
             },
             {
-                note: { label: "The (AI) hype was real", title: "Vertical jump" },
-                x: x(new Date("2018-02-15")),
+                note: { label: "Despite the increase, in the context of general market and company growth, this is actually declining", title: "General downward trend" },
+                x: x(new Date("2018-01-15")),
                 y: yLeft(42),
                 dy: 35,
-                dx: 45
+                dx: 55
             }
         ];
         const makeAnnotations = d3.annotation()
