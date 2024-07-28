@@ -552,7 +552,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .style("font-size", "16px")
         .style("cursor", "pointer")
         .style("box-shadow", "2px 2px 5px rgba(0, 0, 0, 0.3)")
-        .style("background-color", "lightgray")
+        .style("background-color", "grey")
         .style("color", "white")
         .on("click", () => window.location.href = 'index.html');
     
