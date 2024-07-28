@@ -161,7 +161,7 @@ function showOverview() {
             note: { label: "Drop and stabilize", title: "Fallback" },
             x: x(new Date("2022-03-01")),
             y: y(210),
-            dy: 35,
+            dy: 10,
             dx: -45
         }
     ];
@@ -199,6 +199,14 @@ function showOverview() {
 
 }
 
+function addHomeButton() {
+    d3.select("#visualization")
+      .append("button")
+      .text("Back to Overview")
+      .attr("onclick", "window.location.href='overview.html'");
+}
+
+
 function showScene1() {
     d3.select("#visualization").html("");  
     d3.select("#visualization")
@@ -231,6 +239,8 @@ function showScene1() {
         false,
         false
     );
+
+    addHomeButton();
 }
 
 function showScene2() {
@@ -264,6 +274,8 @@ function showScene2() {
         true,
         false
     );
+
+    addHomeButton();
 }
 
 function showScene3() {
@@ -299,6 +311,8 @@ function showScene3() {
         false,
         true
     );
+
+    addHomeButton();
 }
 
 function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAccessorRight, yAxisLabelRight, addHoverEffect, chartColorLeft, chartColorRight, isScene1, isScene2, isScene3) {
@@ -449,7 +463,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 x: x(new Date("2018-02-15")),
                 y: yLeft(42),
                 dy: -35,
-                dx: 45
+                dx: -45
             }
         ];
         const makeAnnotations = d3.annotation()
