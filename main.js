@@ -210,7 +210,7 @@ function showScene1() {
         .style("fill", "grey")
         .style("font-size", "14px")  
         .html(`
-            <h2 style="font-size: 18px;">Crypto Crash (early 2018 to end of 2019)</h2>
+            <h2 style="font-size: 18px;">Crypto Crash (mid 2017 to end of 2019)</h2>
             <p>Even thought there was increase in certain segments of this period, the overall trend was definitely downward considering the general market was forward-looking and compared to the company previous' strong growth. There were two main catalysts in this downward trend of closing price in Nvidia stock. They seemed like separate factors, but these two reasons are strongly tied together and they both had consequences that caused the decreasing trend to continue over these two years.</p>
             <p>First of all, the crypto burst or "Crypto Crash", i.e. the crash of the cryptocurrency market early 2018, has unanimously affected NVIDIA stock price. Cryptocurrency is heavily dependent on CPUs and GPUs. A slowing global economy as well as  escalating trade war between the USA with China have caused NVIDIA to have it steep drop in October 2018.</p>
             <p>But it didn't stop from there, NVIDIA stock price continued to drop drastically all the way to January 2019, because of the second catalyst - its third-quarter report release. This was disappointing to Wall Street, on which the company attributed this pummeling to the effects of a "crypto hangover". </p>
@@ -220,7 +220,7 @@ function showScene1() {
 
     createChart(
         filteredData,
-        "NVIDIA Stock Closing Prices and Trading Volume: early 2018 to end of 2019",
+        "NVIDIA Stock Closing Prices and Trading Volume: mid 2017 to end of 2019",
         d => d.Close,
         "Closing Price (USD)",
         d => d.Volume / 1e6,
@@ -451,7 +451,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             {
                 note: {
                     wrap: width/2,
-                    label: "Despite the increase, in the context of general market and company growth, this is actually declining",
+                    label: "The price increased at the beginning but the quick drop and consistent decrease later made it overall a declining trend",
                     title: "General downward trend"
                 },
                 x: x(new Date("2018-01-15")),
