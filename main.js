@@ -161,7 +161,7 @@ function showOverview() {
             note: { label: "Drop and stabilize", title: "Fallback" },
             x: x(new Date("2022-03-01")),
             y: y(210),
-            dy: 10,
+            dy: 110,
             dx: -45
         }
     ];
@@ -201,9 +201,9 @@ function showOverview() {
 
 function addHomeButton() {
     d3.select("#visualization")
-      .append("button")
+      .append("homeButton")
       .text("Back to Overview")
-      .attr("onclick", "window.location.href='overview.html'");
+      .attr("onclick", "window.location.href='index.html'");
 }
 
 
@@ -240,7 +240,6 @@ function showScene1() {
         false
     );
 
-    addHomeButton();
 }
 
 function showScene2() {
@@ -275,7 +274,6 @@ function showScene2() {
         false
     );
 
-    addHomeButton();
 }
 
 function showScene3() {
@@ -312,7 +310,6 @@ function showScene3() {
         true
     );
 
-    addHomeButton();
 }
 
 function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAccessorRight, yAxisLabelRight, addHoverEffect, chartColorLeft, chartColorRight, isScene1, isScene2, isScene3) {
@@ -462,8 +459,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 note: { label: "The (AI) hype was real", title: "Vertical jump" },
                 x: x(new Date("2018-02-15")),
                 y: yLeft(42),
-                dy: -35,
-                dx: -45
+                dy: 35,
+                dx: 45
             }
         ];
         const makeAnnotations = d3.annotation()
@@ -608,6 +605,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             </p>
         `);
 
+    addHomeButton();
 
     
 
