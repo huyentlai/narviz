@@ -456,7 +456,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 },
                 x: x(new Date("2018-01-15")),
                 y: yLeft(42),
-                dy: 55,
+                dy: 75,
                 dx: 55
             }
         ];
