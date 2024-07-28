@@ -199,13 +199,6 @@ function showOverview() {
 
 }
 
-function addHomeButton() {
-    d3.select("#visualization")
-      .append("homeButton")
-      .text("Back to Overview")
-      .attr("onclick", "window.location.href='index.html'");
-}
-
 
 function showScene1() {
     d3.select("#visualization").html("");  
@@ -549,6 +542,19 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             }));
         svg.append("g").call(makeAnnotations);
     }
+
+    //Addd home button 
+    d3.select("#visualization").append("div")
+        .style("text-align", "center")
+        .append("button")
+        .text("Back to Overview")
+        .style("padding", "10px 20px")
+        .style("font-size", "16px")
+        .style("cursor", "pointer")
+        .style("box-shadow", "2px 2px 5px rgba(0, 0, 0, 0.3)")
+        .style("background-color", "lightgray")
+        .style("color", "white")
+        .on("click", () => window.location.href = 'index.html');
     
     // Add legend
     const legend = svg.append("g")
@@ -570,6 +576,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .style("fill", "grey")
        .style("font-size", "14px")
         .attr("alignment-baseline", "middle");
+
     
     // Right axis line legend
     legend.append("line")
@@ -604,10 +611,6 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             <a href="https://www.kaggle.com/datasets/harshsingh2209/nvidia-stock-pricing-20172022?resource=download" target="_blank">Kaggle Data Source</a>
             </p>
         `);
-
-    addHomeButton();
-
-    
 
 }
 
