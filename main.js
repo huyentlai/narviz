@@ -5,17 +5,15 @@ document.addEventListener('DOMContentLoaded', function() {
             d.Close = +d.Close;
             d.Volume = +d.Volume;
         });
-        window.data = data;  // Make data available globally
-        showOverview();  // Show overview on load
+        window.data = data;  
+        showOverview(); 
     });
 });
 
-// Define margins and dimensions
 const margin = { top: 50, right: 50, bottom: 120, left: 120 },
       width = 800 - margin.left - margin.right,
       height = 600 - margin.top - margin.bottom;
 
-// Tooltip div
 const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
 const cutOffDate = "2020-02-01";
@@ -23,14 +21,14 @@ const cutOffDate1 = "2019-12-01";
 const cutOffDate2 = "2021-12-10";
 
 function showOverview() {
-    d3.select("#visualization").html("");  // Clear previous content
+    d3.select("#visualization").html("");  
     d3.select("#visualization")
         .append("div")
         .attr("class", "description")
-        .style("padding-left", "100px")  // Add left padding
+        .style("padding-left", "100px")  
         .style("padding-right", "100px") 
         .style("fill", "darkgrey")
-        .style("font-size", "14px")  // Set the font size to a smaller value
+        .style("font-size", "14px")  
         .html(`
             <h2 style="font-size: 18px;">Who is NVIDIA</h2>
             <p>NVIDIA is the inventor of GPU and is still a pioneer in this technology. The company "specializes in products and platforms" for multiple busines types and markets.</p>
@@ -158,6 +156,13 @@ function showOverview() {
             y: y(250),
             dy: -35,
             dx: -45
+        },
+        {
+            note: { label: "Drop and stabilize", title: "Fallback" },
+            x: x(new Date("2022-03-01")),
+            y: y(210),
+            dy: 35,
+            dx: -45
         }
     ];
 
@@ -195,14 +200,14 @@ function showOverview() {
 }
 
 function showScene1() {
-    d3.select("#visualization").html("");  // Clear previous content
+    d3.select("#visualization").html("");  
     d3.select("#visualization")
         .append("div")
         .attr("class", "description")
-        .style("padding-left", "100px")  // Add left padding
+        .style("padding-left", "100px")  
         .style("padding-right", "100px") 
         .style("fill", "grey")
-        .style("font-size", "14px")  // Set the font size to a smaller value
+        .style("font-size", "14px")  
         .html(`
             <h2 style="font-size: 18px;">Crypto Crash (early 2018 to end of 2019)</h2>
             <p>Even thought there was increase in certain segments of this period, the overall trend was definitely downward considering the general market was forward-looking and compared to the company previous' strong growth. There were two main catalysts in this downward trend of closing price in Nvidia stock. They seemed like separate factors, but these two reasons are strongly tied together and they both had consequences that caused the decreasing trend to continue over these two years.</p>
@@ -229,14 +234,14 @@ function showScene1() {
 }
 
 function showScene2() {
-    d3.select("#visualization").html("");  // Clear previous content
+    d3.select("#visualization").html("");  
     d3.select("#visualization")
         .append("div")
         .attr("class", "description")
-        .style("padding-left", "60px")  // Add left padding
+        .style("padding-left", "60px")  
         .style("padding-right", "60px")
         .style("fill", "grey")
-        .style("font-size", "14px")  // Set the font size to a smaller value
+        .style("font-size", "14px")  
         .html(`
             <h2 style="font-size: 18px;">The Datacenter Boom: end of 2019 to early 2021</h2>
             <p>After the dreadful drop in price in the previous year, starting in mid-2019, NVIDIA's stock began to rise again. This whole period of time saw big jumps, and sometimes almost vertical increase, largely thanks to its data center game well-played, sophisticated high-end technology that answered the demand of big markets such as China's, and AI prospects. </p>
@@ -262,14 +267,14 @@ function showScene2() {
 }
 
 function showScene3() {
-    d3.select("#visualization").html("");  // Clear previous content
+    d3.select("#visualization").html("");  
     d3.select("#visualization")
         .append("div")
         .attr("class", "description")
-        .style("padding-left", "100px")  // Add left padding
+        .style("padding-left", "100px")  
         .style("padding-right", "100px")
         .style("fill", "grey")
-        .style("font-size", "14px")  // Set the font size to a smaller value
+        .style("font-size", "14px")  
         .html(`
             <h2 style="font-size: 18px;">The Pullback: early to mid 2022 </h2>
             <p>After reaching the highest point in their stock price, NVIDIA saw an almost immediate drop, but only to the same point as before the volatile peak. This could be due to several reasons which could explain this trend that is observed in our chart. </p>
@@ -314,7 +319,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("transform", "translate(" + width + ",0)")
         .call(d3.axisRight(yRight))
         .selectAll("path")
-        .attr("stroke-dasharray", "2,2")  // Make the axis line dotted
+        .attr("stroke-dasharray", "2,2")  
         .attr("stroke-width", 0.8); 
     
     const lineLeft = d3.line()
@@ -330,8 +335,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .attr("fill", "none")
         .attr("stroke", chartColorRight)
         .attr("stroke-width", 2)
-        .attr("stroke-width", 0.8)  // Make the line thinner
-        .attr("stroke-dasharray", "2,2")  // Make the line dashed
+        .attr("stroke-width", 0.8)  
+        .attr("stroke-dasharray", "2,2")  
         .attr("d", lineRight);
 
     svg.append("path")
@@ -429,8 +434,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             {
                 type: d3.annotationXYThreshold,
                 note: {
-                    title: `Highest to Lowest point: NVIDIA's stock price fell 56% over about 3 months.`,
-                    label: `General downward trend`,
+                    title: `General downward trend`,
+                    label: `Highest to Lowest point: NVIDIA's stock price fell 56% over about 3 months.`,
                     align: "left",
                     wrap: width / 3
                 },
@@ -438,6 +443,13 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 y: yLeft(65),
                 dx: 0,
                 dy: 0
+            },
+            {
+                note: { label: "The (AI) hype was real", title: "Vertical jump" },
+                x: x(new Date("2018-02-15")),
+                y: yLeft(42),
+                dy: -35,
+                dx: 45
             }
         ];
         const makeAnnotations = d3.annotation()
@@ -461,18 +473,18 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             {
                 type: d3.annotationXYThreshold,
                 note: {
-                    title: `Lowest to highest point: A whooping jump of 680% in price`,
-                    label: `NVIDIA reports looked good`,
+                    title: `Big Boost by AI and market demand`,
+                    label: `Lowest to highest point: A whooping jump of 680% in price`,
                     align: "middle",
                     wrap: width / 3
                 },
                 x: x(new Date("2020-08-01")),
-                y: yLeft(190),
+                y: yLeft(220),
                 dx: 0,
                 dy: 0
             },
             {
-                note: { label: "Vertical jump", title: "The (AI) hype was real" },
+                note: { label: "The (AI) hype was real", title: "Vertical jump" },
                 x: x(new Date("2021-10-20")),
                 y: yLeft(250),
                 dy: -35,
@@ -500,8 +512,8 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
             {
                 type: d3.annotationXYThreshold,
                 note: {
-                    title: `Highest to Lowest point: Dipped by 50%, and stabilized`,
-                    label: `Market Correction`,
+                    title: `Market Correction`,
+                    label: `Highest to Lowest point: Dipped by 50%, and stabilized`,
                     align: "middle",
                     wrap: width / 3
                 },
