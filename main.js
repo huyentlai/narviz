@@ -449,7 +449,11 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
                 dy: 0
             },
             {
-                note: { label: "Despite the increase, in the context of general market and company growth, this is actually declining", title: "General downward trend" },
+                note: {
+                    wrap: width/2,
+                    label: "Despite the increase, in the context of general market and company growth, this is actually declining",
+                    title: "General downward trend"
+                },
                 x: x(new Date("2018-01-15")),
                 y: yLeft(42),
                 dy: 35,
