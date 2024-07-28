@@ -183,7 +183,7 @@ function showOverview() {
         .style("font-size", "12px")
         .style("text-align", "center")
         .html(`
-            <p>© 2024 by Huyen Lai. All rights reserved.</p>
+            <p>© 2024 by Huyen Lai - CS416. All rights reserved.</p>
             <p>References</p>
             <p><a href="https://www.nasdaq.com" target="_blank">Nasdaq</a> <br>
             <a href="https://www.investorplace.com" target="_blank">InvestorPlace</a> <br> 
@@ -573,7 +573,7 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .style("font-size", "12px")
         .style("text-align", "center")
         .html(`
-            <p>© 2024 by Huyen Lai. All rights reserved.</p>
+            <p>© 2024 by Huyen Lai - CS416. All rights reserved.</p>
             <p>References:</p>
             <p><a href="https://www.nasdaq.com" target="_blank">Nasdaq</a> <br>
             <a href="https://www.investorplace.com" target="_blank">InvestorPlace</a> <br> 
