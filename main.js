@@ -41,6 +41,7 @@ function showOverview() {
             <p>Datacenter Bloom: an incredible recovery marked by huge surge in price.</p>
             <p>The Pullback: Long-term growth continues to thrive but general market challenges kept the stock price in check.</p>
             <p>Overall, the story of NVIDIA stock reflects the volatility and dynamic nature of the tech industry and is very interesting to observe and good motivation for further discussion. This chart is interactive and invites you to click on different color-coded line segments to discover more details as well as observation about the other data that could be useful for your own insights.</p>
+            <p>The dataset that goes with this narrative was retried from <a href="https://www.kaggle.com/datasets/harshsingh2209/nvidia-stock-pricing-20172022?resource=download" target="_blank">Kaggle Data Source</a></p>
         `);
     
     const svg = d3.select("#visualization").append("svg")
@@ -175,6 +176,7 @@ function showOverview() {
         }));
     svg.append("g").call(makeAnnotations);
 
+    //Footnote
     d3.select("#visualization").append("div")
         .attr("class", "footer")
         .style("padding", "10px 20px")
@@ -182,8 +184,12 @@ function showOverview() {
         .style("text-align", "center")
         .html(`
             <p>© 2024 by Huyen Lai. All rights reserved.</p>
-            <p>References:</p>
-            <p><a href="https://www.nasdaq.com" target="_blank">Nasdaq</a>, <a href="https://www.investorplace.com" target="_blank">InvestorPlace</a>, <a href="https://www.gartner.com/en/research/methodologies/gartner-hype-cycle" target="_blank">Gartner Hype Cycle</a>, <a href="https://www.kaggle.com/datasets/harshsingh2209/nvidia-stock-pricing-20172022?resource=download" target="_blank">Kaggle Data Source</a></p>
+            <p>References</p>
+            <p><a href="https://www.nasdaq.com" target="_blank">Nasdaq</a> <br>
+            <a href="https://www.investorplace.com" target="_blank">InvestorPlace</a> <br> 
+            <a href="https://www.gartner.com/en/research/methodologies/gartner-hype-cycle" target="_blank">Gartner Hype Cycle</a><br>
+            <a href="https://www.kaggle.com/datasets/harshsingh2209/nvidia-stock-pricing-20172022?resource=download" target="_blank">Kaggle Data Source</a>
+            </p>
         `);
 
 }
@@ -559,6 +565,23 @@ function createChart(data, title, yValueAccessorLeft, yAxisLabelLeft, yValueAcce
         .style("fill", "grey")
         .style("font-size", "14px")
         .attr("alignment-baseline", "middle");
+
+    //add footnote
+    d3.select("#visualization").append("div")
+        .attr("class", "footer")
+        .style("padding", "10px 20px")
+        .style("font-size", "12px")
+        .style("text-align", "center")
+        .html(`
+            <p>© 2024 by Huyen Lai. All rights reserved.</p>
+            <p>References:</p>
+            <p><a href="https://www.nasdaq.com" target="_blank">Nasdaq</a> <br>
+            <a href="https://www.investorplace.com" target="_blank">InvestorPlace</a> <br> 
+            <a href="https://www.gartner.com/en/research/methodologies/gartner-hype-cycle" target="_blank">Gartner Hype Cycle</a><br>
+            <a href="https://www.kaggle.com/datasets/harshsingh2209/nvidia-stock-pricing-20172022?resource=download" target="_blank">Kaggle Data Source</a>
+            </p>
+        `);
+
 
     
 
