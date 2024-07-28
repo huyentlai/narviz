@@ -86,6 +86,22 @@
             border-top: 1px solid #555;
             margin-top: 20px;
         }
+        
+        #homeButton {
+            margin-top: 20px;
+        }
+    
+        #homeButton button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.2s ease;
+        }
+    
+        #homeButton button:active {
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
 
 
     </style>
@@ -99,6 +115,8 @@
         <button onclick="showScene3()">The Fallback</button>
   </div>
     <div id="visualization"></div>
+</div>
+
 </body>
 
 </html>
