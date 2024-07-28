@@ -39,7 +39,7 @@ function showOverview() {
             <p>Datacenter Bloom: an incredible recovery marked by huge surge in price.</p>
             <p>The Pullback: Long-term growth continues to thrive but general market challenges kept the stock price in check.</p>
             <p>Overall, the story of NVIDIA stock reflects the volatility and dynamic nature of the tech industry and is very interesting to observe and good motivation for further discussion. This chart is interactive and invites you to click on different color-coded line segments to discover more details as well as observation about the other data that could be useful for your own insights.</p>
-            <p>The dataset that goes with this narrative was retried from <a href="https://www.kaggle.com/datasets/harshsingh2209/nvidia-stock-pricing-20172022?resource=download" target="_blank">Kaggle Data Source</a></p>
+            <p>The dataset that goes with this narrative was retrieved from <a href="https://www.kaggle.com/datasets/harshsingh2209/nvidia-stock-pricing-20172022?resource=download" target="_blank">Kaggle Data Source</a></p>
         `);
     
     const svg = d3.select("#visualization").append("svg")
